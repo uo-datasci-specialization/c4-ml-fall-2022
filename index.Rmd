@@ -1,0 +1,17 @@
+---
+title: "Course Title"
+description: |
+  Short Course description
+site: distill::distill_website
+---
+
+Long course description
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+```
+
