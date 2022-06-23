@@ -30,7 +30,7 @@ n=1
 tab[n,] %>%
   kbl(format = 'html',
       escape = FALSE,
-      col.names = c('Date','Notes','Slides','Optional Reading','Assignments')) %>%
+      col.names = c('Date','Notes','Kaggle Notebooks','Slides','Optional Reading','Assignments')) %>%
   kable_material(c("striped", "hover"),full_width = T)
 
 ```

@@ -32,8 +32,8 @@ navbar:
     
     - text: "Lecture Notes"
       menu:
-        - text: "Lecture1"
-          href: lecture1.html
+        - text: "Lecture-1a"
+          href: lecture-1a.html
           
     - text: "Slides"
       menu:
