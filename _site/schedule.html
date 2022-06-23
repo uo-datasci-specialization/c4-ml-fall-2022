@@ -87,30 +87,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Course Title: Course Schedule</title>
+  <title>Applied Machine Learning for Educational Data Science: Schedule</title>
 
-  <meta property="description" itemprop="description" content="Some additional details about the website"/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Course Title: Course Schedule"/>
+  <meta property="og:title" content="Applied Machine Learning for Educational Data Science: Schedule"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Some additional details about the website"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Course Title"/>
+  <meta property="og:site_name" content="Applied Machine Learning for Educational Data Science"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Course Title: Course Schedule"/>
-  <meta property="twitter:description" content="Some additional details about the website"/>
+  <meta property="twitter:title" content="Applied Machine Learning for Educational Data Science: Schedule"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["Course Schedule"]},{"type":"character","attributes":{},"value":["Some additional details about the website"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Schedule"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2039,6 +2036,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2048,6 +2047,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-1RQZJC7E05"></script>
+  <script type="text/javascript" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1RQZJC7E05');
+  </script>
   <!--/radix_placeholder_site_in_header-->
 
 
@@ -2058,7 +2064,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Course Schedule","description":"Some additional details about the website","authors":[]}
+{"title":"Schedule","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2066,7 +2072,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <header class="header header--fixed" role="banner">
 <nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
-<a href="index.html" class="title">Course Title</a>
+<a href="index.html" class="title">Applied Machine Learning for Educational Data Science</a>
 </div>
 <div class="nav-right">
 <a href="index.html">Home</a>
@@ -2102,7 +2108,7 @@ Assignments
 <a href="assignment1.html">Assignment1</a>
 </div>
 </div>
-<a href="https://github.com/czopluoglu">
+<a href="https://github.com/uo-datasci-specialization/c4-ml-fall-2022">
 <i class="fa fa-github" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2114,15 +2120,66 @@ Assignments
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Course Schedule</h1>
+<h1>Schedule</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Some additional details about the website</p></p>
+
 </div>
 
 
 <div class="d-article">
-<p>Course schedule table</p>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#week-1-introduction">Week 1: Introduction</a></li>
+</ul>
+</nav>
+</div>
+<h3 id="week-1-introduction">Week 1: Introduction</h3>
+<div class="layout-chunk" data-layout="l-body">
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Notes
+</th>
+<th style="text-align:left;">
+Slides
+</th>
+<th style="text-align:left;">
+Optional Reading
+</th>
+<th style="text-align:left;">
+Assignments
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3-Oct
+</td>
+<td style="text-align:left;">
+<a>Lecture 1a</a> <br> <a>Lecture 1b</a>
+</td>
+<td style="text-align:left;">
+<a>Week 1</a>
+</td>
+<td style="text-align:left;">
+<a>XYZ Ch1</a>
+</td>
+<td style="text-align:left;">
+<a>Assignment 1</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br> <br> <br></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

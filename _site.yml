@@ -1,12 +1,19 @@
-name: "Course Website Template"
+name: "EDLD 654 - UO COE"
 
-title: "Course Title"
+title: "Applied Machine Learning for Educational Data Science"
 
 description: |
-  Course description
+
+  This course focuses on applied machine learning (ML), with an emphasis on 
+  supervised learning methods that have emerged over the last several decades.
+  
+  The primary goal of these methods is to create models capable of making
+  accurate predictions, which generally implies less emphasis on statistical 
+  inference.
  
-#base_url: https://rstudio.github.io/distill 
-#google_analytics: "UA-77306155-2"
+base_url: https://edld654-fall22.netlify.app/
+
+google_analytics: "G-1RQZJC7E05"
 
 output_dir: "_site"
 
@@ -39,7 +46,7 @@ navbar:
           href: assignment1.html
           
     - icon: fa fa-github
-      href: https://github.com/czopluoglu
+      href: https://github.com/uo-datasci-specialization/c4-ml-fall-2022
 
 output: 
   distill::distill_article:    

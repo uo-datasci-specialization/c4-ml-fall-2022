@@ -1,11 +1,41 @@
 ---
-title: "Course Schedule"
-description: |
-  Some additional details about the website
+title: "Schedule"
+
+output:
+  distill::distill_article:
+    self_contained: true
+    toc: true
+    toc_float: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r, include=FALSE}
+require(here)
+require(kableExtra)
+
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+
+tab <- read.csv(here('data/schedule.csv'))
+
 ```
 
-Course schedule table
+
+### Week 1: Introduction
+
+```{r}
+
+n=1
+
+tab[n,] %>%
+  kbl(format = 'html',
+      escape = FALSE,
+      col.names = c('Date','Notes','Slides','Optional Reading','Assignments')) %>%
+  kable_material(c("striped", "hover"),full_width = T)
+
+```
+<br>
+<br>
+<br>
+
+
