@@ -18,6 +18,54 @@ knitr::opts_chunk$set(echo = FALSE,
 
 tab <- read.csv(here('data/schedule.csv'))
 
+tab$notes_       <- cell_spec(tab$notes,
+                              'html',
+                              link=tab$notes_link)
+
+tab$kaggle_      <- cell_spec(tab$kaggle,
+                              'html',
+                              link = tab$kaggle_link)
+
+tab$slides_      <- cell_spec(tab$slides,
+                              'html',
+                              link = tab$slides_link)
+
+tab$reading_     <- cell_spec(tab$reading,
+                              'html',
+                              link=tab$reading_link)
+
+tab$assignments_ <- cell_spec(tab$assignments,
+                              'html',
+                              link = tab$assignments_link)
+```
+
+```{r}
+
+tbl <- function(d){
+  
+  loc <- which(tab$date==d)
+  
+  tab2 <- tab[1,c('date','notes_','kaggle_','slides_','reading_','assignments_')]
+    
+  if(length(loc)>1){
+    
+    for(r in 2:length(loc)){
+      
+      tab2[1,] <- paste0(tab2[1,],
+                         '<br>',
+                         tab[loc[r],c('date','notes_','kaggle_','slides_','reading_','assignments_')])
+    }
+  
+  }
+  
+  tab2[1,1] <- d
+  
+  tab2 %>%
+    kbl(format = 'html',
+        escape = FALSE,
+        col.names = c('Date','Notes','Kaggle Notebooks','Slides','Optional Reading','Assignments')) %>%
+    kable_material(c("striped", "hover"),full_width = T)
+}
 ```
 
 
@@ -25,13 +73,7 @@ tab <- read.csv(here('data/schedule.csv'))
 
 ```{r}
 
-n=1
-
-tab[n,] %>%
-  kbl(format = 'html',
-      escape = FALSE,
-      col.names = c('Date','Notes','Kaggle Notebooks','Slides','Optional Reading','Assignments')) %>%
-  kable_material(c("striped", "hover"),full_width = T)
+tbl(d='3-Oct')
 
 ```
 <br>

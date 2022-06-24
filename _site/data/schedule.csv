@@ -1,10 +1,11 @@
-date,notes,kaggle,slides,reading,assignments
-3-Oct,"<a href=""https://edld654-fall22.netlify.app/lecture-1a.html"">Lecture-1a</a> <br> <a href=""www.google.com"">Lecture 1b</a>","<a href=""https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook"">Lecture-1a notebook</a>","<a href=""www.google.com"">Week 1</a>","<a href=""www.google.com"">XYZ Ch1</a>","<a href=""www.google.com"">Assignment 1</a>"
-10-Oct,,,,,
-17-Oct,,,,,
-24-Oct,,,,,
-31-Oct,,,,,
-7-Nov,,,,,
-14-Nov,,,,,
-21-Nov,,,,,
-28-Nov,,,,,
+date,notes,notes_link,kaggle,kaggle_link,slides,slides_link,reading,reading_link,assignments,assignments_link
+3-Oct,Lecture-1a,https://edld654-fall22.netlify.app/lecture-1a.html,Lecture-1a notebook,https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook,Week 1,https://www.google.com,XYZ Ch1,https://www.google.com,Assignment 1,https://www.google.com
+3-Oct,Lecture-1b,https://www.google.com,Lecture-1b notebook,https://www.google.com,,,ABC Ch1,https://www.google.com,,
+10-Oct,,,,,,,,,,
+17-Oct,,,,,,,,,,
+24-Oct,,,,,,,,,,
+31-Oct,,,,,,,,,,
+7-Nov,,,,,,,,,,
+14-Nov,,,,,,,,,,
+21-Nov,,,,,,,,,,
+28-Nov,,,,,,,,,,
