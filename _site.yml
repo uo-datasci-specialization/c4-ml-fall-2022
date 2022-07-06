@@ -32,12 +32,17 @@ navbar:
     
     - text: "Lecture Notes"
       menu:
-        - text: "Lecture-1a"
-          href: lecture-1a.html
+        - text: "Lecture-1"
+          href: lecture-1.html
+          
+    - text: "Kaggle Notebooks"
+      menu:
+        - text: "Notebook-1"
+          href: https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook
           
     - text: "Slides"
       menu:
-        - text: "Slide1"
+        - text: "Week 1"
           href: slides/slide1.html
     
     - text: "Assignments"

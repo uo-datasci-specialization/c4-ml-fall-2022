@@ -1,6 +1,5 @@
 date,notes,notes_link,kaggle,kaggle_link,slides,slides_link,reading,reading_link,assignments,assignments_link
-3-Oct,Lecture-1a,https://edld654-fall22.netlify.app/lecture-1a.html,Lecture-1a notebook,https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook,Week 1,https://www.google.com,XYZ Ch1,https://www.google.com,Assignment 1,https://www.google.com
-3-Oct,Lecture-1b,https://www.google.com,Lecture-1b notebook,https://www.google.com,,,ABC Ch1,https://www.google.com,,
+3-Oct,Lecture-1,https://edld654-fall22.netlify.app/lecture-1.html,Notebook-1,https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook,Week 1,https://edld654-fall22.netlify.app/slides/slide1.html,Kaggle CommonLit Readability Competition;NIJ Recidivism Challenge,https://www.kaggle.com/c/commonlitreadabilityprize/;https://nij.ojp.gov/funding/recidivism-forecasting-challenge,,
 10-Oct,,,,,,,,,,
 17-Oct,,,,,,,,,,
 24-Oct,,,,,,,,,,

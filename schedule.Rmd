@@ -17,63 +17,93 @@ knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE)
 
 tab <- read.csv(here('data/schedule.csv'))
-
-tab$notes_       <- cell_spec(tab$notes,
-                              'html',
-                              link=tab$notes_link)
-
-tab$kaggle_      <- cell_spec(tab$kaggle,
-                              'html',
-                              link = tab$kaggle_link)
-
-tab$slides_      <- cell_spec(tab$slides,
-                              'html',
-                              link = tab$slides_link)
-
-tab$reading_     <- cell_spec(tab$reading,
-                              'html',
-                              link=tab$reading_link)
-
-tab$assignments_ <- cell_spec(tab$assignments,
-                              'html',
-                              link = tab$assignments_link)
 ```
 
 ```{r}
 
-tbl <- function(d){
+tbl <- function(tab,d){
   
   loc <- which(tab$date==d)
   
-  tab2 <- tab[1,c('date','notes_','kaggle_','slides_','reading_','assignments_')]
-    
-  if(length(loc)>1){
-    
-    for(r in 2:length(loc)){
-      
-      tab2[1,] <- paste0(tab2[1,],
-                         '<br>',
-                         tab[loc[r],c('date','notes_','kaggle_','slides_','reading_','assignments_')])
-    }
+  tab2 <- tab[loc,]
   
+  if(!is.na(tab2$notes)){
+    
+    tab2$notes_       <- paste0(cell_spec(strsplit(tab2$notes,';')[[1]],
+                                          'html',
+                                          link=strsplit(tab2$notes_link,';')[[1]]),
+                                collapse = '<br>')
+  } else {
+    tab2$notes_ <- ''
   }
   
-  tab2[1,1] <- d
+  
+  if(!is.na(tab2$kaggle)){
+    
+    tab2$kaggle_      <- paste0(cell_spec(strsplit(tab2$kaggle,';')[[1]],
+                                          'html',
+                                          link=strsplit(tab2$kaggle_link,';')[[1]]),
+                                collapse = '<br>')
+  } else {
+    
+    tab2$kaggle_ <- ''
+    
+  }
+  
+  
+  if(!is.na(tab2$slides)){
+      
+    tab2$slides_      <- paste0(cell_spec(strsplit(tab2$slides,';')[[1]],
+                                          'html',
+                                          link=strsplit(tab2$slides_link,';')[[1]]),
+                                collapse = '<br>')
+  } else {
+    tab2$slides_ <- ''
+  }
+  
+  
+  
+  if(!is.na(tab2$reading)){
+     
+    tab2$reading_     <- paste0(cell_spec(strsplit(tab2$reading,';')[[1]],
+                                            'html',
+                                            link=strsplit(tab2$reading_link,';')[[1]]),
+                                  collapse = '<br>')
+  } else{
+    tab2$reading_ <- ''
+  }
+  
+  if(!is.na(tab2$assignments)){
+    
+    tab2$assignments_ <- paste0(cell_spec(strsplit(tab2$assignments,';')[[1]],
+                                            'html',
+                                            link=strsplit(tab2$assignments_link,';')[[1]]),
+                                  collapse = '<br>')
+  } else{
+    tab2$assignments_ <- ''
+  }
+  
+  
+  tab2 <- tab2[,c('date','notes_','kaggle_','slides_','reading_','assignments_')]
   
   tab2 %>%
     kbl(format = 'html',
         escape = FALSE,
         col.names = c('Date','Notes','Kaggle Notebooks','Slides','Optional Reading','Assignments')) %>%
-    kable_material(c("striped", "hover"),full_width = T)
+    kable_material(c("striped", "hover"),full_width = T) %>%
+    row_spec(0, background = "#F6FBF4") %>%
+    row_spec(0:1, extra_css = "border-bottom: solid;") %>%
+    row_spec(0:1, extra_css = "border-top: solid;") %>%
+    row_spec(0:1, extra_css = "border-left: solid;") %>%
+    row_spec(0:1, extra_css = "border-right: solid;")
 }
 ```
-
 
 ### Week 1: Introduction
 
 ```{r}
 
-tbl(d='3-Oct')
+tbl(tab,d='3-Oct')
 
 ```
 <br>
