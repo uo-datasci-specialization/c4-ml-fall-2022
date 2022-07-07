@@ -35,6 +35,9 @@ navbar:
         - text: "Lecture-1"
           href: lecture-1.html
           
+        - text: "Lecture-2a"
+          href: lecture-2a.html
+          
     - text: "Kaggle Notebooks"
       menu:
         - text: "Notebook-1"

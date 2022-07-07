@@ -106,6 +106,14 @@ tbl <- function(tab,d){
 tbl(tab,d='3-Oct')
 
 ```
+
+### Week 2: Data Preprocessing
+
+```{r}
+
+tbl(tab,d='10-Oct')
+
+```
 <br>
 <br>
 <br>
