@@ -88,7 +88,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Applied Machine Learning for Educational Data Science: Data Preprocessing I (Continuous and Categorical Data)</title>
+  <title>Applied Machine Learning for Educational Data Science: Data Preprocessing I: Continuous and Categorical Data</title>
 
 
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
@@ -99,20 +99,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <meta name="article:author" content="Cengiz Zopluoglu"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Applied Machine Learning for Educational Data Science: Data Preprocessing I (Continuous and Categorical Data)"/>
+  <meta property="og:title" content="Applied Machine Learning for Educational Data Science: Data Preprocessing I: Continuous and Categorical Data"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Applied Machine Learning for Educational Data Science"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Applied Machine Learning for Educational Data Science: Data Preprocessing I (Continuous and Categorical Data)"/>
+  <meta property="twitter:title" content="Applied Machine Learning for Educational Data Science: Data Preprocessing I: Continuous and Categorical Data"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Data Preprocessing I (Continuous and Categorical Data)"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Cengiz Zopluoglu"]},{"type":"character","attributes":{},"value":["University of Oregon"]}]}]},{"type":"character","attributes":{},"value":["07/06/2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float","theme"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["theme.css"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Data Preprocessing I: Continuous and Categorical Data"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Cengiz Zopluoglu"]},{"type":"character","attributes":{},"value":["University of Oregon"]}]}]},{"type":"character","attributes":{},"value":["07/06/2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float","theme"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["theme.css"]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2426,7 +2426,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Data Preprocessing I (Continuous and Categorical Data)","authors":[{"author":"Cengiz Zopluoglu","authorURL":"#","affiliation":"University of Oregon","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-07-06T00:00:00.000-07:00","citationText":"Zopluoglu, 2022"}
+{"title":"Data Preprocessing I: Continuous and Categorical Data","authors":[{"author":"Cengiz Zopluoglu","authorURL":"#","affiliation":"University of Oregon","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-07-06T00:00:00.000-07:00","citationText":"Zopluoglu, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2493,7 +2493,7 @@ Assignments
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Data Preprocessing I (Continuous and Categorical Data)</h1>
+<h1>Data Preprocessing I: Continuous and Categorical Data</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2560,7 +2560,7 @@ using the <code>recipes</code> package</a></li>
 }
 
 </style>
-<p>[Updated: Wed, Jul 06, 2022 - 19:21:18 ]</p>
+<p>[Updated: Thu, Jul 07, 2022 - 21:27:29 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3209,25 +3209,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2771826 
- - mean (before standardization) = -3.124325 
- - sd (before standardization) = 0.1503301 </code></pre>
+ - lambda = 0.2656007 
+ - mean (before standardization) = -3.218488 
+ - sd (before standardization) = 0.1603598 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 2.06     6.21
+X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.93     5.16
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew
-X1    1 1000 -3.12 0.15  -3.12   -3.12 0.15 -3.51 -2.68  0.83 -0.04
-   kurtosis se
-X1    -0.24  0</code></pre>
+X1    1 1000 -3.22 0.16  -3.22   -3.22 0.17 -3.65 -2.75   0.9 -0.04
+   kurtosis   se
+X1    -0.29 0.01</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
@@ -3790,11 +3790,11 @@ variables (<code>step_poly</code>)</li>
 <span>  </span>
 <span>  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_logit.html'>step_logit</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>props</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  </span>
-<span>  <span class='co'># Natural splines for numeric variables and proportions</span></span>
+<span>  <span class='co'># 2nd degree polynomial terms for numeric variables and proportions</span></span>
 <span>  </span>
 <span>  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_poly.html'>step_poly</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>numeric</span><span class='op'>)</span>,<span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>props</span><span class='op'>)</span>,degree<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  </span>
-<span>  <span class='co'># Standardize the natural splines of numeric variables and proportions</span></span>
+<span>  <span class='co'># Standardize the polynomial terms of numeric variables and proportions</span></span>
 <span>  </span>
 <span>  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>numeric</span>,<span class='st'>'_poly_1'</span><span class='op'>)</span>,</span>
 <span>                 <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>numeric</span>,<span class='st'>'_poly_2'</span><span class='op'>)</span>,</span>

@@ -1,5 +1,5 @@
 ---
-title: "Data Preprocessing I (Continuous and Categorical Data)"
+title: "Data Preprocessing I: Continuous and Categorical Data"
 
 author:
   - name: Cengiz Zopluoglu
@@ -728,11 +728,11 @@ blueprint <- recipe(x  = recidivism,
   
   step_logit(all_of(props)) %>%
   
-  # Natural splines for numeric variables and proportions
+  # 2nd degree polynomial terms for numeric variables and proportions
   
   step_poly(all_of(numeric),all_of(props),degree=2) %>%
   
-  # Standardize the natural splines of numeric variables and proportions
+  # Standardize the polynomial terms of numeric variables and proportions
   
   step_normalize(paste0(numeric,'_poly_1'),
                  paste0(numeric,'_poly_2'),
