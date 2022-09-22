@@ -38,10 +38,55 @@ navbar:
         - text: "Lecture-2a"
           href: lecture-2a.html
           
+        - text: "Lecture-2b"
+          href: lecture-2b.html
+        
+        - text: "Lecture-3a"
+          href: https://edld654-fall22.netlify.app/
+          
+        - text: "Lecture-3b"
+          href: 
+          
+        - text: "Lecture-4a"
+          href: 
+          
+        - text: "Lecture-4b"
+          href: 
+          
+        - text: "Lecture-5a"
+          href: 
+          
+        - text: "Lecture-5b"
+          href: 
+          
+        - text: "Lecture-6a"
+          href: 
+          
+        - text: "Lecture-6b"
+          href: 
+          
+        - text: "Lecture-7a"
+          href: 
+          
+        - text: "Lecture-7b"
+          href:   
+          
+        - text: "Lecture-8a"
+          href:   
+        
+        - text: "Lecture-8b"
+          href:   
     - text: "Kaggle Notebooks"
       menu:
         - text: "Notebook-1"
           href: https://www.kaggle.com/code/uocoeeds/week-1-introduction/notebook
+        
+        - text: "Notebook-2a"
+          href: https://www.kaggle.com/code/uocoeeds/lecture-2a-data-preprocessing-i
+        
+        - text: "Notebook-2b"
+          href: https://www.kaggle.com/code/uocoeeds/lecture-2b-data-preprocessing-ii
+              
           
     - text: "Slides"
       menu:
