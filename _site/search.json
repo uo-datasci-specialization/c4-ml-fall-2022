@@ -70,16 +70,15 @@
       "path": "schedule.html",
       "title": "Schedule",
       "author": [],
-      "contents": "\r\n\r\nContents\r\nWeek 1: Introduction\r\nWeek 2: Data\r\nPreprocessing\r\n\r\n\r\n\r\n\r\nWeek 1: Introduction\r\n\r\n\r\nDate\r\n\r\n\r\nNotes\r\n\r\n\r\nKaggle Notebooks\r\n\r\n\r\nSlides\r\n\r\n\r\nOptional Supplemental Readings\r\n\r\n\r\nAssignments\r\n\r\n\r\n3-Oct\r\n\r\n\r\nLecture-1\r\n\r\n\r\nNotebook-1\r\n\r\n\r\nWeek\r\n1\r\n\r\n\r\nKaggle\r\nCommonLit Readability\r\nCompetitionNIJ\r\nRecidivism Challenge\r\n\r\n\r\n\r\n\r\nWeek 2: Data Preprocessing\r\n\r\n\r\nDate\r\n\r\n\r\nNotes\r\n\r\n\r\nKaggle Notebooks\r\n\r\n\r\nSlides\r\n\r\n\r\nOptional Supplemental Readings\r\n\r\n\r\nAssignments\r\n\r\n\r\n10-Oct\r\n\r\n\r\nLecture-2aLecture-2b\r\n\r\n\r\nNotebook-2aNotebook-2b\r\n\r\n\r\nWeek2\r\n\r\n\r\nKuhn\r\n& Johnson, Ch.\r\n6Kuhn\r\n& Johnson, Ch.\r\n5Boehmke\r\n& Greenwell, Ch. 3\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-07-07T22:14:17-07:00"
+      "contents": "\r\n\r\nContents\r\nWeek 1:\r\nIntroduction\r\nWeek 2: Data Preprocessing\r\n\r\n\r\n\r\n\r\nWeek 1: Introduction\r\n\r\n\r\nDate\r\n\r\n\r\nNotes\r\n\r\n\r\nKaggle Notebooks\r\n\r\n\r\nSlides\r\n\r\n\r\nOptional Supplemental Readings\r\n\r\n\r\nAssignments\r\n\r\n\r\n3-Oct\r\n\r\n\r\nLecture-1\r\n\r\n\r\nNotebook-1\r\n\r\n\r\nWeek\r\n1\r\n\r\n\r\nKaggle\r\nCommonLit Readability\r\nCompetitionNIJ\r\nRecidivism Challenge\r\n\r\n\r\n\r\n\r\nWeek 2: Data Preprocessing\r\n\r\n\r\nDate\r\n\r\n\r\nNotes\r\n\r\n\r\nKaggle Notebooks\r\n\r\n\r\nSlides\r\n\r\n\r\nOptional Supplemental Readings\r\n\r\n\r\nAssignments\r\n\r\n\r\n10-Oct\r\n\r\n\r\nLecture-2aLecture-2b\r\n\r\n\r\nNotebook-2aNotebook-2b\r\n\r\n\r\nWeek2\r\n\r\n\r\nKuhn\r\n& Johnson, Ch.\r\n6Kuhn\r\n& Johnson, Ch.\r\n5Boehmke\r\n& Greenwell, Ch. 3\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-09-22T16:54:18-07:00"
     },
     {
       "path": "syllabus.html",
       "title": "Course Syllabus",
-      "description": "Some additional details about the website",
       "author": [],
-      "contents": "\r\nCourse syllabus\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-07-07T22:14:19-07:00"
+      "contents": "\r\nDownload\r\nthe course syllabus\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-09-22T16:14:28-07:00"
     }
   ],
   "collections": []

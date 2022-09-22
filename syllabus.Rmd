@@ -1,11 +1,11 @@
 ---
 title: "Course Syllabus"
 description: |
-  Some additional details about the website
+  
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Course syllabus
+[Download the course syllabus](https://github.com/uo-datasci-specialization/c4-ml-fall-2022/raw/main/Syllabus_EDUC654.pdf)

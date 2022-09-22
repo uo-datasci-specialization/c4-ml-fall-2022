@@ -227,7 +227,7 @@ https://namedrop.io/cengizzopluoglu
 
 - moved to Eugene in Summer 2020,
 
-- am married with two kids (6 and 9).
+- am married with two kids (7 and 10).
 
 ---
 
@@ -277,26 +277,14 @@ The primary goal of the methods covered in this course is to create models capab
 
 
 See the syllabus for a detailed list of learning outcomes.
-
----
-## Prerequisites
-
-- Successful completion of the first three courses in EDS specialization (EDLD 651, EDLD 652, and EDLD  653) is required to enroll in this course. 
-
-- Successful completion of an introductory and intermediate course in statistics (e.g., EDUC 614, EDUC 642) would be helpful and complimentary.
-
-- If you have never taken a course on linear algebra and calculus, there are some notes to read on the website (Week 0). It may be useful to review them.
-
 ---
 ## Office hours
 
 - Online office hours: 
   
-  - Wednesday, 4 pm – 5 pm (Zoom)
+  - Monday, 4pm – 5pm (in person), 5pm - 6pm (Zoom)
   
   - by appointment
-  
-  - https://uoregon.zoom.us/j/6883665008?pwd=S1BkMTZhTk4weWZVSjUvQ2FVeGowQT09
   
   - If possible, notify me in advance to avoid waiting time.
 
@@ -331,7 +319,7 @@ My lecture notes will be prepared using these books as primary sources.
 
 - Every lecture will be accompanied by a Kaggle R notebook so students can easily reproduce the analysis demonstrated in the lectures.
 
-- The HEDCO Learning Commons (https://learningcommons.uoregon.edu/) is located in Room 110 and equipped with Windows and macOS computer workstations, small and large study rooms. It is currently open from 9 am to 5 pm Monday – Friday.
+- The HEDCO Learning Commons (https://learningcommons.uoregon.edu/) is located in Room 110 and equipped with Windows and macOS computer workstations, small and large study rooms. It is currently open from 8am to 8pm Monday – Thursday, 8am - 5pm on Fridays.
 
 ---
 
@@ -355,15 +343,15 @@ My lecture notes will be prepared using these books as primary sources.
 
 - Supplemental Lecture Notes, Readings, and Kaggle notebooks
 
-- Four Homework Assignments
+- Three Homework Assignments
 
-  - A total of four assignments will be delivered through Canvas
-  
-  - All homework assignment should be completed independently without any help from another person. You cannot discuss your work with other people in the class or outside of the class. 
+  - A total of three assignments will be delivered through Canvas
   
   - These assignments are open-book. You can use your notes, books, slides, or Web to search while you respond to these questions. 
   
-  - The assignments will be available for one week after they are posted. You have to complete the assignments during this window. 
+  - I will post them as Kaggle notebooks. You can either copy the notebook, complete the assignment, and submit a link to your notebook on Canvas. Or, you can complete the assignment as an R markdown document, and submit a knitted version on Canvas (either as HTML or pdf).
+
+- A final project (see the syllabus for details)
 
 ---
 
@@ -534,9 +522,17 @@ install_miniconda()
 
 - If you are having troubles about installing these packages in your computer, I highly recommend using a Kaggle R notebook which these packages are already installed.
 
-- Please create a Kaggle notebook if you don't have one.
+- Please create a Kaggle account if you don't have one.
+
+- A demonstration of how to copy and work with provided Kaggle notebooks.
 
 <center>
 https://www.kaggle.com/code/uocoeeds/week-1-introduction
+
+
+- A demonstration of how to complete and submit an assignment.
+
+<center>
+https://www.kaggle.com/code/uocoeeds/demo-assignment
 
 
