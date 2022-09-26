@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Preprocessing</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Cengiz Zopluoglu" />
+    <script src="slide2_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="slide2_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="slide2_files/remark-css-0.0.1/uo.css" rel="stylesheet" />
+    <link href="slide2_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
+    <script src="slide2_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+    <link href="slide2_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="slide2_files/datatables-binding-0.23/datatables.js"></script>
+    <script src="slide2_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <link href="slide2_files/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="slide2_files/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="slide2_files/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+    <link href="slide2_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="slide2_files/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="my_custom.css" type="text/css" />
+    <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Data Preprocessing
+]
+.author[
+### Cengiz Zopluoglu
+]
+.institute[
+### College of Education, University of Oregon
+]
+.date[
+### Oct 10, 2022 <br> Eugene, OR
+]
+
+---
+
+
+&lt;style&gt;
+
+.blockquote {
+  border-left: 5px solid #007935;
+  background: #f9f9f9;
+  padding: 10px;
+  padding-left: 30px;
+  margin-left: 16px;
+  margin-right: 0;
+  border-radius: 0px 4px 4px 0px;
+}
+
+#infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: #E6F6DC 5px center/3em no-repeat;
+}
+
+.centering[
+  float: center;
+]
+
+.left-column2 {
+  width: 50%;
+  height: 92%;
+  float: left;
+  padding-top: 1em;
+}
+
+.right-column2 {
+  width: 50%;
+  float: right;
+  padding-top: 1em;
+}
+
+.remark-code {
+  font-size: 18px;
+}
+
+.tiny .remark-code { /*Change made here*/
+  font-size: 70% !important;
+}
+
+.tiny2 .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+
+.indent {
+  margin-left: 3em;
+}
+
+.single {
+  line-height: 1 ;
+}
+
+
+.double {
+  line-height: 2 ;
+}
+
+.title-slide h1 {
+  padding-top: 0px;
+  font-size: 40px;
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.title-slide h2 {
+  font-size: 30px;
+  text-align: center;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.title-slide h3 {
+  font-size: 30px;
+  color: #26272A;
+  text-align: center;
+  text-shadow: none;
+  padding: 10px;
+  margin: 10px;
+  line-height: 1.2;
+}
+
+&lt;/style&gt;
+
+
+
+### Today's Goals:
+
+- Processing Categorical Predictors
+  
+  - One-hot encoding (dummy variables)
+  
+  - Label encoding
+  
+  - Polynomial Contrasts
+
+- Processing Cyclic Variables
+
+- Processing Continuous Variables
+
+  - Centering and Scaling
+  
+  - Box-Cox transformation
+  
+  - Logit transformation
+  
+  - Polynomial basis expansions
+  
+- Handling Missing Data
+
+- the `recipes` package
+
+- Processing Text Data with pre-trained NLP models
+
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# Processing Categorical Predictors
+
+---
+
+- When categorical predictors are in a dataset, it is essential to transform them into numerical codes because this is the only way to use them in predictive modeling. 
+
+&lt;br&gt;
+&lt;br&gt;
+
+<div id="htmlwidget-f77f89ec2f27309244cd" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f77f89ec2f27309244cd">{"x":{"filter":"none","vertical":false,"data":[["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","F","F","M","M","M","F","M","M","M","M","M","F","M","M","M","M","M","M","F","M","M","M","M","M","M","M","F","M","F","M","M","M","F","M"],["BLACK","BLACK","BLACK","WHITE","WHITE","BLACK","BLACK","WHITE","WHITE","WHITE","BLACK","WHITE","BLACK","WHITE","BLACK","BLACK","WHITE","WHITE","WHITE","WHITE","BLACK","WHITE","WHITE","BLACK","WHITE","BLACK","BLACK","BLACK","BLACK","BLACK","BLACK","WHITE","WHITE","BLACK","WHITE","WHITE","BLACK","BLACK","BLACK","BLACK","WHITE","BLACK","WHITE","BLACK","WHITE","BLACK","BLACK","BLACK","WHITE","WHITE"],["At least some college","Less than HS diploma","At least some college","Less than HS diploma","High School Diploma","Less than HS diploma","High School Diploma","Less than HS diploma","Less than HS diploma","Less than HS diploma","Less than HS diploma","High School Diploma","At least some college","Less than HS diploma","High School Diploma","Less than HS diploma","High School Diploma","Less than HS diploma","Less than HS diploma","Less than HS diploma","High School Diploma","Less than HS diploma","High School Diploma","Less than HS diploma","High School Diploma","Less than HS diploma","High School Diploma","At least some college","High School Diploma","High School Diploma","Less than HS diploma","High School Diploma","High School Diploma","Less than HS diploma","At least some college","At least some college","Less than HS diploma","High School Diploma","High School Diploma","At least some college","Less than HS diploma","Less than HS diploma","Less than HS diploma","High School Diploma","High School Diploma","Less than HS diploma","High School Diploma","High School Diploma","Less than HS diploma","High School Diploma"],["Drug","Violent/Non-Sex","Drug","Property","Property",null,"Drug","Violent/Non-Sex","Property","Violent/Non-Sex",null,"Property","Property","Property","Violent/Non-Sex","Drug","Violent/Non-Sex","Other","Drug","Other","Property","Property","Drug","Drug","Drug","Property","Violent/Non-Sex","Property","Violent/Non-Sex","Drug","Violent/Non-Sex","Drug","Violent/Sex","Drug","Property","Other","Drug","Property","Violent/Sex","Violent/Non-Sex",null,"Property","Property","Property","Other","Drug","Drug",null,null,"Violent/Non-Sex"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Gender<\/th>\n      <th>Race<\/th>\n      <th>Education Level<\/th>\n      <th>Prison Offence<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"lengthMenu":3,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+&lt;br&gt;
+
+- When encoding categorical predictors, we try to preserve as much information as possible from their labels
+
+---
+
+## One-hot encoding (dummy variables)
+
+- A **dummy variable** is a synthetic variable with two values (0 and 1) representing a group membership.
+
+- When there is a nominal variable with *N* levels, it is typical to create *N* dummy variables to represent the information in the nominal variable. 
+
+- Each dummy variable represents membership to one of the levels in the nominal variable. 
+
+- These dummy variables can be used as features in predictive models.
+
+- In its simplest case, consider the variable Race in the Recidivism dataset with two levels: Black and White. We can create two dummy variables to represent the information in this variable.
+
+|        | Dummy Variable 1 | Dummy Variable 2 |
+|--------|:----------------:|:----------------:|
+| Black  |     1            |       0
+| White  |     0            |       1          |
+
+---
+- Variable Prison_Offense has five categories: Violent/Sex, Violent/Non-Sex, Property, Drug, and Other. 
+
+- We can create five dummy variables using the following coding scheme.
+&lt;br&gt;
+
+|                  | Dummy Variable 1 | Dummy Variable 2 | Dummy Variable 3 | Dummy Variable 4 | Dummy Variable 5 |
+|------------------|:----------------:|:----------------:|:----------------:|:----------------:|:----------------:|
+| Violent/Sex      |     1            |       0          |     0            |     0            |     0            |
+| Violent/Non-Sex  |     0            |       1          |     0            |     0            |     0            |
+| Property         |     0            |     0            |     1            |     0            |     0            |
+| Drug             |     0            |     0            |     0            |     1            |     0            |
+| Other            |     0            |     0            |     0            |     0            |     1            |
+
+---
+
+&lt;br&gt;
+
+<div id="htmlwidget-286c63ddbd5470cb3e8d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-286c63ddbd5470cb3e8d">{"x":{"filter":"none","vertical":false,"data":[["BLACK","BLACK","BLACK","WHITE","WHITE","BLACK","BLACK","WHITE","WHITE","WHITE"],[1,1,1,0,0,1,1,0,0,0],[0,0,0,1,1,0,0,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Race<\/th>\n      <th>Race_Black<\/th>\n      <th>Race_White<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":"_all"}],"info":false,"paging":false,"searching":false,"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+---
+
+&lt;br&gt;
+
+<div id="htmlwidget-c5a610bac5d321b7ba8c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c5a610bac5d321b7ba8c">{"x":{"filter":"none","vertical":false,"data":[["Drug","Violent/Non-Sex","Drug","Property","Property",null,"Drug","Violent/Non-Sex","Property","Violent/Non-Sex"],[1,0,1,0,0,null,1,0,0,0],[0,0,0,1,1,null,0,0,1,0],[0,1,0,0,0,null,0,1,0,1],[0,0,0,0,0,null,0,0,0,0],[0,0,0,0,0,null,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Prison Offense<\/th>\n      <th>Drug<\/th>\n      <th>Property<\/th>\n      <th>Violent/Sex<\/th>\n      <th>Violent/Nonsex<\/th>\n      <th>Other<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":"_all"}],"info":false,"paging":false,"searching":false,"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+---
+
+&lt;br&gt;
+
+&lt;div id="infobox"&gt;
+
+&lt;center style="color:black;"&gt; &lt;b&gt;NOTE&lt;/b&gt; &lt;/center&gt;
+
+&lt;br&gt;
+
+When you fit a typical regression model without regularization using ordinary least-squares (OLS), a typical practice is to drop a dummy variable for one of the levels. So, for instance, if there are &lt;i&gt;N&lt;/i&gt; levels for a nominal variable, you only have to create (&lt;i&gt;N-1&lt;/i&gt;) dummy variables, as the &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;th&lt;/sup&gt; one has redundant information. The information regarding the excluded category is represented in the intercept term. It creates a problem when you put all &lt;i&gt;N&lt;/i&gt; dummy variables into the model because the OLS procedure tries to invert a singular matrix, and you will likely get an error message. 
+
+&lt;br&gt;
+&lt;br&gt;
+
+On the other hand, this is not an issue when you fit a regularized regression model, which will be the case in this class. Therefore, you do not need to drop one of the dummy variables and can include all of them in the analysis. In fact, it may be beneficial to keep the dummy variables for all categories in the model when regularization is used in the regression. Otherwise, the model may produce different predictions depending on which category is excluded.
+
+&lt;/div&gt;
+
+---
+
+## Label encoding
+
+- When the variable of interest is ordinal, and there is a hierarchy among the levels, another alternative is to assign a numerical value to each category.
+
+- Consider the variable **Age_At_Release** in the Recidivism dataset. It is coded as 7 different age intervals in the dataset: 18-22, 23-27, 28-32, 33-37, 38-42, 43-47, 48 or older. 
+
+|             | Encoding 1      | Encoding 2       |
+|-------------|:---------------:|:----------------:|
+| 18-22       |     20          |       1          |
+| 23-27       |     25          |       2          |
+| 28-32       |     30          |       3          |
+| 33-37       |     35          |       4          |
+| 38-42       |     40          |       5          |
+| 43-47       |     45          |       6          |
+| 48 or older |     60          |       7          |
+
+---
+
+&lt;br&gt;
+
+<div id="htmlwidget-d23e30b6021a17aa4083" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d23e30b6021a17aa4083">{"x":{"filter":"none","vertical":false,"data":[["43-47","33-37","48 or older","38-42","38-42","48 or older","38-42","43-47","48 or older","33-37"],[45,35,60,40,40,60,40,45,60,35],[6,4,7,5,5,7,5,6,7,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Age_at_Release<\/th>\n      <th>Encoding 1<\/th>\n      <th>Encoding 2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":"_all"}],"info":false,"paging":false,"searching":false,"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+---
+
+- Another example would be the variable **Education Level** in the Recidivism dataset. 
+
+- How would you encode this variable?
+
+|                        | Encoding 1 | Encoding 2      |
+|------------------------|:----------:|:---------------:|
+| Less than a HS diploma |            |                 |
+| HS diploma             |            |                 |
+| At least some college  |            |                 |
+
+---
+
+## Polynomial Contrasts
+
+- Another way of encoding an ordinal variable is to use polynomial contrasts. 
+
+- The polynomial contrasts may be helpful if one wants to explore whether or not there is a linear, quadratic, cubic, etc., relationship between the predictor variable and outcome variable.
+
+- If there are *N* levels, one can have polynomial terms up to the (*N-1*)&lt;sup&gt;th&lt;/sup&gt; degree.
+
+- The polynomial terms are **orthonormal vectors**:
+  
+  - sum of the squares within each column is equal to 1
+  - the dot product of the vectors is equal to 0.
+
+---
+
+&lt;br&gt;
+
+<div id="htmlwidget-d08fa8acef31515df8b6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d08fa8acef31515df8b6">{"x":{"filter":"none","vertical":false,"data":[["18-22","23-27","28-32","33-37","38-42","43-47","48 or older"],[-0.567,-0.378,-0.189,0,0.189,0.378,0.567],[0.546,0,-0.327,-0.436,-0.327,0,0.546],[-0.408,0.408,0.408,0,-0.408,-0.408,0.408],[0.242,-0.564,0.081,0.483,0.081,-0.564,0.242],[-0.109,0.436,-0.546,-0,0.546,-0.436,0.109],[0.033,-0.197,0.493,-0.658,0.493,-0.197,0.033]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Age at Release<\/th>\n      <th>Linear Term<\/th>\n      <th>Quadratic Term<\/th>\n      <th>Cubic Term<\/th>\n      <th>4th Degree Term<\/th>\n      <th>5th Degree Term<\/th>\n      <th>6th Degree Term<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":"_all"}],"info":false,"paging":false,"searching":false,"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+---
+
+&lt;img src="slide2_files/figure-html/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# Processing Cyclic Variables
+
+---
+
+- There are sometimes variables that are cyclic by nature (e.g., months, days, hour)
+
+- Dummy variables or numerical encoding does not necessarily capture the information in these variables in the most meaningful way.
+
+- For cyclic variables, it may be more meaningful to creating two new variables using a sine and cosine transformation as the following:
+
+`$$x_{1} = sin(\frac{2 \pi x}{max(x)})$$`
+
+`$$x_{2} = cos(\frac{2 \pi x}{max(x)})$$`
+<div id="htmlwidget-b359bf5504bf6257e31d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b359bf5504bf6257e31d">{"x":{"filter":"none","vertical":false,"data":[["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],[1,2,3,4,5,6,7],[0.782,0.975,0.434,-0.434,-0.975,-0.782,-0],[0.623,-0.223,-0.901,-0.901,-0.223,0.623,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Day<\/th>\n      <th>x<\/th>\n      <th>term1<\/th>\n      <th>term2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-center","targets":"_all"}],"paging":false,"info":false,"searching":false,"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'75%','text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'75%','text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+
+---
+
+&lt;img src="slide2_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+- Below is another example for the time of day
+
+.pull-left[
+.single[
+
+```
+   hour     x1     x2
+1     1  0.259  0.966
+2     2  0.500  0.866
+3     3  0.707  0.707
+4     4  0.866  0.500
+5     5  0.966  0.259
+6     6  1.000  0.000
+7     7  0.966 -0.259
+8     8  0.866 -0.500
+9     9  0.707 -0.707
+10   10  0.500 -0.866
+11   11  0.259 -0.966
+12   12  0.000 -1.000
+13   13 -0.259 -0.966
+14   14 -0.500 -0.866
+15   15 -0.707 -0.707
+16   16 -0.866 -0.500
+17   17 -0.966 -0.259
+18   18 -1.000  0.000
+19   19 -0.966  0.259
+20   20 -0.866  0.500
+21   21 -0.707  0.707
+22   22 -0.500  0.866
+23   23 -0.259  0.966
+24   24  0.000  1.000
+```
+]
+]
+
+.pull-right[
+
+&lt;img src="slide2_files/figure-html/unnamed-chunk-10-1.svg" style="display: block; margin: auto;" /&gt;
+]
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# Processing Continuous Variables
+
+---
+
+## Centering and Scaling
+
+---
+
+## Box-Cox transformation
+
+---
+
+## Logit transformation
+
+---
+
+## Polynomial basis expansions
+
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# Handling Missing Data
+
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# the `recipes` package
+
+---
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+# Processing Text Data with pre-trained NLP models
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

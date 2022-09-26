@@ -198,7 +198,15 @@ linear <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('Linear Term')
+  ggtitle('Linear Term')+
+  scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 quad <- ggplot()+
   geom_point(aes(x=1:7,y=ctr[,2]),cex=3)+
@@ -207,7 +215,15 @@ quad <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('Quadratic Term')
+  ggtitle('Quadratic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 cubic <- ggplot()+
   geom_point(aes(x=1:7,y=ctr[,3]),cex=3)+
@@ -216,7 +232,15 @@ cubic <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('Cubic Term')
+  ggtitle('Cubic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 fourth <- ggplot()+
   geom_point(aes(x=1:7,y=ctr[,4]),cex=3)+
@@ -225,7 +249,15 @@ fourth <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('4th Degree Term')
+  ggtitle('Quartic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 fifth <- ggplot()+
   geom_point(aes(x=1:7,y=ctr[,5]),cex=3)+
@@ -234,7 +266,15 @@ fifth <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('5th Degree Term')
+  ggtitle('Quintic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 
 sixth <- ggplot()+
@@ -244,7 +284,15 @@ sixth <- ggplot()+
   theme_bw()+
   xlab('')+
   ylab('')+
-  ggtitle('6th Degree Term')
+  ggtitle('Sextic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
 
 
 grid.arrange(linear,quad,cubic,fourth,fifth,sixth,nrow=3,ncol=2)

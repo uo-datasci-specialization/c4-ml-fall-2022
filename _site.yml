@@ -92,6 +92,10 @@ navbar:
       menu:
         - text: "Week 1"
           href: slides/slide1.html
+        
+        - text: "Week 2"
+          href: slides/slide2.html
+          
     
     - text: "Assignments"
       menu:

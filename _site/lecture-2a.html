@@ -2450,6 +2450,18 @@ Lecture Notes
 <a href="lecture-1.html">Lecture-1</a>
 <a href="lecture-2a.html">Lecture-2a</a>
 <a href="lecture-2b.html">Lecture-2b</a>
+<a href="https://edld654-fall22.netlify.app/">Lecture-3a</a>
+<span class="nav-dropdown-header">Lecture-3b</span>
+<span class="nav-dropdown-header">Lecture-4a</span>
+<span class="nav-dropdown-header">Lecture-4b</span>
+<span class="nav-dropdown-header">Lecture-5a</span>
+<span class="nav-dropdown-header">Lecture-5b</span>
+<span class="nav-dropdown-header">Lecture-6a</span>
+<span class="nav-dropdown-header">Lecture-6b</span>
+<span class="nav-dropdown-header">Lecture-7a</span>
+<span class="nav-dropdown-header">Lecture-7b</span>
+<span class="nav-dropdown-header">Lecture-8a</span>
+<span class="nav-dropdown-header">Lecture-8b</span>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2472,6 +2484,7 @@ Slides
 </button>
 <div class="nav-dropdown-content">
 <a href="slides/slide1.html">Week 1</a>
+<a href="slides/slide2.html">Week 2</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2513,36 +2526,49 @@ Assignments
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#scales-of-measurement-and-types-of-variables">1. Scales of
+<li><a href="#scales-of-measurement-and-types-of-variables"
+id="toc-scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</a></li>
-<li><a href="#processing-categorical-variables">2. Processing
-Categorical Variables</a>
-<ul>
-<li><a href="#one-hot-encoding-dummy-variables">2.1 One-hot encoding
-(Dummy Variables)</a></li>
-<li><a href="#label-encoding">2.2. Label encoding</a></li>
-<li><a href="#polynomial-contrasts">2.3. Polynomial Contrasts</a></li>
-</ul></li>
-<li><a href="#processing-cyclic-variables">3. Processing Cyclic
-Variables</a></li>
-<li><a href="#processing-continuous-variables">4. Processing Continuous
+<li><a href="#processing-categorical-variables"
+id="toc-processing-categorical-variables">2. Processing Categorical
 Variables</a>
 <ul>
-<li><a href="#centering-and-scaling-standardization">4.1. Centering and
-Scaling (Standardization)</a></li>
-<li><a href="#box-cox-transformation">4.2. Box-Cox
-transformation</a></li>
-<li><a href="#logit-transformation">4.3. Logit Transformation</a></li>
-<li><a href="#basis-expansions">4.4. Basis Expansions</a></li>
+<li><a href="#one-hot-encoding-dummy-variables"
+id="toc-one-hot-encoding-dummy-variables">2.1 One-hot encoding (Dummy
+Variables)</a></li>
+<li><a href="#label-encoding" id="toc-label-encoding">2.2. Label
+encoding</a></li>
+<li><a href="#polynomial-contrasts" id="toc-polynomial-contrasts">2.3.
+Polynomial Contrasts</a></li>
 </ul></li>
-<li><a href="#handling-missing-data">5. Handling Missing Data</a>
+<li><a href="#processing-cyclic-variables"
+id="toc-processing-cyclic-variables">3. Processing Cyclic
+Variables</a></li>
+<li><a href="#processing-continuous-variables"
+id="toc-processing-continuous-variables">4. Processing Continuous
+Variables</a>
 <ul>
-<li><a href="#creating-an-indicator-variable-for-missingness">5.1.
-Creating an indicator variable for missingness</a></li>
-<li><a href="#imputation">5.2. Imputation</a></li>
+<li><a href="#centering-and-scaling-standardization"
+id="toc-centering-and-scaling-standardization">4.1. Centering and
+Scaling (Standardization)</a></li>
+<li><a href="#box-cox-transformation"
+id="toc-box-cox-transformation">4.2. Box-Cox transformation</a></li>
+<li><a href="#logit-transformation" id="toc-logit-transformation">4.3.
+Logit Transformation</a></li>
+<li><a href="#basis-expansions" id="toc-basis-expansions">4.4. Basis
+Expansions</a></li>
 </ul></li>
-<li><a href="#wrapping-up-using-the-recipes-package">6. Wrapping-up
-using the <code>recipes</code> package</a></li>
+<li><a href="#handling-missing-data" id="toc-handling-missing-data">5.
+Handling Missing Data</a>
+<ul>
+<li><a href="#creating-an-indicator-variable-for-missingness"
+id="toc-creating-an-indicator-variable-for-missingness">5.1. Creating an
+indicator variable for missingness</a></li>
+<li><a href="#imputation" id="toc-imputation">5.2. Imputation</a></li>
+</ul></li>
+<li><a href="#wrapping-up-using-the-recipes-package"
+id="toc-wrapping-up-using-the-recipes-package">6. Wrapping-up using the
+<code>recipes</code> package</a></li>
 </ul>
 </nav>
 </div>
@@ -2563,7 +2589,7 @@ using the <code>recipes</code> package</a></li>
 }
 
 </style>
-<p>[Updated: Thu, Jul 07, 2022 - 22:13:38 ]</p>
+<p>[Updated: Mon, Sep 26, 2022 - 16:31:48 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3212,25 +3238,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2431316 
- - mean (before standardization) = -3.427075 
- - sd (before standardization) = 0.19739 </code></pre>
+ - lambda = 0.2578162 
+ - mean (before standardization) = -3.278727 
+ - sd (before standardization) = 0.165809 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 2.04     6.14
+X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.96     4.98
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>   vars    n  mean  sd median trimmed  mad   min   max range  skew
-X1    1 1000 -3.43 0.2  -3.42   -3.43 0.21 -3.94 -2.82  1.12 -0.05
+<pre><code>   vars    n  mean   sd median trimmed  mad   min  max range  skew
+X1    1 1000 -3.28 0.17  -3.28   -3.28 0.17 -3.75 -2.8  0.96 -0.02
    kurtosis   se
-X1    -0.41 0.01</code></pre>
+X1    -0.12 0.01</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>

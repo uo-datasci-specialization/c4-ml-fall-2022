@@ -1,0 +1,740 @@
+---
+title: "Data Preprocessing"
+subtitle: ""
+author: "Cengiz Zopluoglu"
+institute: "College of Education, University of Oregon"
+date: "Oct 10, 2022 <br> Eugene, OR"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'uo', 'ki-fonts', 'my_custom.css', 'xaringanthemer.css']
+    #self_contained: true
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+<style>
+
+.blockquote {
+  border-left: 5px solid #007935;
+  background: #f9f9f9;
+  padding: 10px;
+  padding-left: 30px;
+  margin-left: 16px;
+  margin-right: 0;
+  border-radius: 0px 4px 4px 0px;
+}
+
+#infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: #E6F6DC 5px center/3em no-repeat;
+}
+
+.centering[
+  float: center;
+]
+
+.left-column2 {
+  width: 50%;
+  height: 92%;
+  float: left;
+  padding-top: 1em;
+}
+
+.right-column2 {
+  width: 50%;
+  float: right;
+  padding-top: 1em;
+}
+
+.remark-code {
+  font-size: 18px;
+}
+
+.tiny .remark-code { /*Change made here*/
+  font-size: 70% !important;
+}
+
+.tiny2 .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+
+.indent {
+  margin-left: 3em;
+}
+
+.single {
+  line-height: 1 ;
+}
+
+
+.double {
+  line-height: 2 ;
+}
+
+.title-slide h1 {
+  padding-top: 0px;
+  font-size: 40px;
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.title-slide h2 {
+  font-size: 30px;
+  text-align: center;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.title-slide h3 {
+  font-size: 30px;
+  color: #26272A;
+  text-align: center;
+  text-shadow: none;
+  padding: 10px;
+  margin: 10px;
+  line-height: 1.2;
+}
+
+</style>
+
+```{R, setup, include = F}
+library(pacman)
+p_load(here, tidyverse, ggplot2, xaringan, knitr, kableExtra, 
+       xaringanthemer,DT,dplyr,gridExtra)
+
+#i_am("B:/UO Teaching/EDUC614/Winter22/Slide Template/template.rmd")
+
+red_pink <- "#e64173"
+turquoise = "#20B2AA"
+orange = "#FFA500"
+red = "#fb6107"
+blue = "#3b3b9a"
+green = "#8bb174"
+grey_light = "grey70"
+grey_mid = "grey50"
+grey_dark = "grey20"
+purple = "#6A5ACD"
+slate = "#314f4f"
+
+extra_css <- list(
+  ".red"   = list(color = "red"),
+  ".blue"  =list(color = "blue"),
+  ".red-pink" = list(color= "red_pink"),
+  ".grey-light" = list(color= "grey_light"),
+  ".purple" = list(color = "purple"),
+  ".small" = list("font-size" = "90%"))
+
+write_extra_css(css = extra_css, outfile = "my_custom.css")
+
+# Knitr options
+opts_chunk$set(
+  comment = "#>",
+  fig.align = "center",
+  fig.height = 6.75,
+  fig.width = 10.5,
+  warning = F,
+  message = F
+)
+opts_chunk$set(dev = "svg")
+options(device = function(file, width, height) {
+  svg(tempfile(), width = width, height = height)
+})
+
+options(knitr.table.format = "html")
+
+options(width = 120)
+
+require(here)
+```
+
+### Today's Goals:
+
+- Processing Categorical Predictors
+  
+  - One-hot encoding (dummy variables)
+  
+  - Label encoding
+  
+  - Polynomial Contrasts
+
+- Processing Cyclic Variables
+
+- Processing Continuous Variables
+
+  - Centering and Scaling
+  
+  - Box-Cox transformation
+  
+  - Logit transformation
+  
+  - Polynomial basis expansions
+  
+- Handling Missing Data
+
+- the `recipes` package
+
+- Processing Text Data with pre-trained NLP models
+
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# Processing Categorical Predictors
+
+---
+
+- When categorical predictors are in a dataset, it is essential to transform them into numerical codes because this is the only way to use them in predictive modeling. 
+
+<br>
+<br>
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+recidivism <- read.csv(here('data/recidivism_y1 removed and recoded.csv'),header=TRUE)
+
+
+
+DT::datatable(data = recidivism[1:50,c('Gender','Race','Education_Level','Prison_Offense')],
+              colnames = c('Gender','Race','Education Level','Prison Offence'),
+              rownames = FALSE,
+              filter="none",
+              options  = list(pageLength = 3,lengthMenu = c(3))) %>%
+    formatStyle(columns = c(1, 2, 3, 4), fontSize = '75%',textAlign = 'center')
+
+```
+
+<br>
+
+- When encoding categorical predictors, we try to preserve as much information as possible from their labels
+
+---
+
+## One-hot encoding (dummy variables)
+
+- A **dummy variable** is a synthetic variable with two values (0 and 1) representing a group membership.
+
+- When there is a nominal variable with *N* levels, it is typical to create *N* dummy variables to represent the information in the nominal variable. 
+
+- Each dummy variable represents membership to one of the levels in the nominal variable. 
+
+- These dummy variables can be used as features in predictive models.
+
+- In its simplest case, consider the variable Race in the Recidivism dataset with two levels: Black and White. We can create two dummy variables to represent the information in this variable.
+
+|        | Dummy Variable 1 | Dummy Variable 2 |
+|--------|:----------------:|:----------------:|
+| Black  |     1            |       0
+| White  |     0            |       1          |
+
+---
+- Variable Prison_Offense has five categories: Violent/Sex, Violent/Non-Sex, Property, Drug, and Other. 
+
+- We can create five dummy variables using the following coding scheme.
+<br>
+
+|                  | Dummy Variable 1 | Dummy Variable 2 | Dummy Variable 3 | Dummy Variable 4 | Dummy Variable 5 |
+|------------------|:----------------:|:----------------:|:----------------:|:----------------:|:----------------:|
+| Violent/Sex      |     1            |       0          |     0            |     0            |     0            |
+| Violent/Non-Sex  |     0            |       1          |     0            |     0            |     0            |
+| Property         |     0            |     0            |     1            |     0            |     0            |
+| Drug             |     0            |     0            |     0            |     1            |     0            |
+| Other            |     0            |     0            |     0            |     0            |     1            |
+
+---
+
+<br>
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+recidivism <- read.csv(here('data/recidivism_y1 removed and recoded.csv'),header=TRUE)[1:10,]
+
+recidivism$race_black <- ifelse(recidivism$Race=='BLACK',1,0)
+recidivism$race_white <- ifelse(recidivism$Race=='WHITE',1,0)
+
+DT::datatable(data = recidivism[,c('Race','race_black','race_white')],
+              colnames = c('Race','Race_Black','Race_White'),
+              rownames = FALSE,
+              filter="none",
+              options = list(columnDefs = list(list(className = 'dt-center', 
+                                                    targets = '_all')),
+                             info = FALSE,
+                             paging = FALSE,
+                             searching = FALSE)) %>%
+    formatStyle(columns = c(1, 2, 3), fontSize = '75%',textAlign = 'center')
+
+```
+
+---
+
+<br>
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+recidivism <- read.csv(here('data/recidivism_y1 removed and recoded.csv'),header=TRUE)[1:10,]
+
+recidivism$drug            <- ifelse(recidivism$Prison_Offense=='Drug',1,0)
+recidivism$property        <- ifelse(recidivism$Prison_Offense=='Property',1,0)
+recidivism$violent_sex     <- ifelse(recidivism$Prison_Offense=='Violent/Non-Sex',1,0)
+recidivism$violent_nonsex  <- ifelse(recidivism$Prison_Offense=='Violent/Sex',1,0)
+recidivism$other         <- ifelse(recidivism$Prison_Offense=='Other',1,0)
+
+
+DT::datatable(data = recidivism[,c('Prison_Offense','drug','property','violent_sex',
+                                   'violent_nonsex','other')],
+              colnames = c('Prison Offense','Drug','Property','Violent/Sex',
+                           'Violent/Nonsex','Other'),
+              rownames = FALSE,
+              filter="none",
+              options = list(columnDefs = list(list(className = 'dt-center', 
+                                                    targets = '_all')),
+                             info = FALSE,
+                             paging = FALSE,
+                             searching = FALSE)) %>%
+    formatStyle(columns = c(1, 2, 3,4,5,6), fontSize = '75%',textAlign = 'center')
+
+```
+
+---
+
+<br>
+
+<div id="infobox">
+
+<center style="color:black;"> <b>NOTE</b> </center>
+
+<br>
+
+When you fit a typical regression model without regularization using ordinary least-squares (OLS), a typical practice is to drop a dummy variable for one of the levels. So, for instance, if there are <i>N</i> levels for a nominal variable, you only have to create (<i>N-1</i>) dummy variables, as the <i>N</i><sup>th</sup> one has redundant information. The information regarding the excluded category is represented in the intercept term. It creates a problem when you put all <i>N</i> dummy variables into the model because the OLS procedure tries to invert a singular matrix, and you will likely get an error message. 
+
+<br>
+<br>
+
+On the other hand, this is not an issue when you fit a regularized regression model, which will be the case in this class. Therefore, you do not need to drop one of the dummy variables and can include all of them in the analysis. In fact, it may be beneficial to keep the dummy variables for all categories in the model when regularization is used in the regression. Otherwise, the model may produce different predictions depending on which category is excluded.
+
+</div>
+
+---
+
+## Label encoding
+
+- When the variable of interest is ordinal, and there is a hierarchy among the levels, another alternative is to assign a numerical value to each category.
+
+- Consider the variable **Age_At_Release** in the Recidivism dataset. It is coded as 7 different age intervals in the dataset: 18-22, 23-27, 28-32, 33-37, 38-42, 43-47, 48 or older. 
+
+|             | Encoding 1      | Encoding 2       |
+|-------------|:---------------:|:----------------:|
+| 18-22       |     20          |       1          |
+| 23-27       |     25          |       2          |
+| 28-32       |     30          |       3          |
+| 33-37       |     35          |       4          |
+| 38-42       |     40          |       5          |
+| 43-47       |     45          |       6          |
+| 48 or older |     60          |       7          |
+
+---
+
+<br>
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+recidivism <- read.csv(here('data/recidivism_y1 removed and recoded.csv'),header=TRUE)[1:10,]
+
+recidivism$age_at_release2 <- dplyr::recode(recidivism$Age_at_Release,
+                                            '18-22'=20,
+                                            '23-27'=25,
+                                            '28-32'=30,
+                                            '33-37'=35,
+                                            '38-42'=40,
+                                            '43-47'=45,
+                                            '48 or older'=60)
+
+recidivism$age_at_release3 <- dplyr::recode(recidivism$Age_at_Release,
+                                            '18-22'=1,
+                                            '23-27'=2,
+                                            '28-32'=3,
+                                            '33-37'=4,
+                                            '38-42'=5,
+                                            '43-47'=6,
+                                            '48 or older'=7)
+
+DT::datatable(data = recidivism[,c('Age_at_Release','age_at_release2','age_at_release3')],
+              colnames = c('Age_at_Release','Encoding 1','Encoding 2'),
+              rownames = FALSE,
+              filter="none",
+              options = list(columnDefs = list(list(className = 'dt-center', 
+                                                    targets = '_all')),
+                             info = FALSE,
+                             paging = FALSE,
+                             searching = FALSE)) %>%
+    formatStyle(columns = c(1, 2, 3), fontSize = '75%',textAlign = 'center')
+
+```
+
+---
+
+- Another example would be the variable **Education Level** in the Recidivism dataset. 
+
+- How would you encode this variable?
+
+|                        | Encoding 1 | Encoding 2      |
+|------------------------|:----------:|:---------------:|
+| Less than a HS diploma |            |                 |
+| HS diploma             |            |                 |
+| At least some college  |            |                 |
+
+---
+
+## Polynomial Contrasts
+
+- Another way of encoding an ordinal variable is to use polynomial contrasts. 
+
+- The polynomial contrasts may be helpful if one wants to explore whether or not there is a linear, quadratic, cubic, etc., relationship between the predictor variable and outcome variable.
+
+- If there are *N* levels, one can have polynomial terms up to the (*N-1*)<sup>th</sup> degree.
+
+- The polynomial terms are **orthonormal vectors**:
+  
+  - sum of the squares within each column is equal to 1
+  - the dot product of the vectors is equal to 0.
+
+---
+
+<br>
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+recidivism <- read.csv(here('data/recidivism_y1 removed and recoded.csv'),header=TRUE)
+
+ctr <- as.data.frame(round(poly(1:7,6),3))
+
+ctr$names <- names(table(recidivism$Age_at_Release))
+
+DT::datatable(data = ctr[,c(7,1:6)],
+              colnames = c('Age at Release','Linear Term','Quadratic Term','Cubic Term',
+                           '4th Degree Term','5th Degree Term','6th Degree Term'),
+              rownames = FALSE,
+              filter="none",
+              options = list(columnDefs = list(list(className = 'dt-center', 
+                                                    targets = '_all')),
+                             info = FALSE,
+                             paging = FALSE,
+                             searching = FALSE)) %>%
+    formatStyle(columns = c(1, 2, 3,4,5,6,7), fontSize = '75%',textAlign = 'center')
+
+```
+
+---
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,fig.height=8}
+
+ctr <- poly(1:7,6)
+
+linear <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,1]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,1]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Linear Term')+
+  scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+quad <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,2]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,2]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Quadratic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+cubic <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,3]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,3]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Cubic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+fourth <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,4]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,4]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Quartic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+fifth <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,5]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,5]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Quintic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+
+sixth <- ggplot()+
+  geom_point(aes(x=1:7,y=ctr[,6]),cex=3)+
+  geom_line(aes(x=1:7,y=ctr[,6]),lty=2)+
+  ylim(c(-1,1))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  ggtitle('Sextic Term')+
+    scale_x_continuous(breaks = 1:7,
+                     labels=c('1'='18-22',
+                              '2'='23-27',
+                              '3'='28-32',
+                              '4'='33-37',
+                              '5'='38-42',
+                              '6'='43-47',
+                              '7'='48 or older'))
+
+
+grid.arrange(linear,quad,cubic,fourth,fifth,sixth,nrow=3,ncol=2)
+```
+
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# Processing Cyclic Variables
+
+---
+
+- There are sometimes variables that are cyclic by nature (e.g., months, days, hour)
+
+- Dummy variables or numerical encoding does not necessarily capture the information in these variables in the most meaningful way.
+
+- For cyclic variables, it may be more meaningful to creating two new variables using a sine and cosine transformation as the following:
+
+$$x_{1} = sin(\frac{2 \pi x}{max(x)})$$
+
+$$x_{2} = cos(\frac{2 \pi x}{max(x)})$$
+```{r,echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+d <- data.frame(days = c('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),
+                x = 1:7)
+
+d$x1 <- round(sin((2*pi*d$x)/7),3)
+d$x2 <- round(cos((2*pi*d$x)/7),3)
+
+DT::datatable(data = d,
+              colnames = c('Day','x','term1','term2'),
+              rownames = FALSE,
+              filter="none",
+              options = list(columnDefs = list(list(className = 'dt-center', 
+                                                    targets = '_all')),
+                             paging=FALSE,
+                             info = FALSE,
+                             searching = FALSE)) %>%
+    formatStyle(columns = c(1, 2, 3,4), fontSize = '75%',textAlign = 'center')
+
+```
+
+---
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=6,fig.height=6}
+
+ggplot(data = d, aes(x=x1,y=x2))+
+  geom_point(cex=3)+
+  annotate("path",
+   x=cos(seq(0,2*pi,length.out=100)),
+   y=sin(seq(0,2*pi,length.out=100)))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  annotate("text", x = 0, y = 0.95, label = "Sun")+
+  annotate("text", x = 0.72, y = 0.6, label = "Mon")+
+  annotate("text", x = 0.9, y = -0.2, label = "Tue")+
+  annotate("text", x = 0.39, y = -0.85, label = "Wed")+
+  annotate("text", x = -0.39, y = -0.85, label = "Thu")+
+  annotate("text", x = -.9, y = -0.2, label = "Fri")+
+  annotate("text", x = -.72, y = 0.6, label = "Sat")
+  
+```
+
+---
+
+- Below is another example for the time of day
+
+.pull-left[
+.single[
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,comment = ''}
+
+d <- data.frame(hour = 1:24)
+
+d$x1 <- round(sin((2*pi*d$hour)/24),3)
+d$x2 <- round(cos((2*pi*d$hour)/24),3)
+
+d
+```
+]
+]
+
+.pull-right[
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=6,fig.height=6}
+
+ggplot(data = d, aes(x=x1,y=x2,label = 1:24))+
+  geom_point(cex=3)+
+  annotate("path",
+   x=cos(seq(0,2*pi,length.out=100)),
+   y=sin(seq(0,2*pi,length.out=100)))+
+  theme_bw()+
+  xlab('')+
+  ylab('')+
+  geom_text(nudge_y = c(rep(-0.05,6),rep(0.05,6),rep(0.05,6),rep(-0.05,6)), 
+            nudge_x = c(rep(-0.02,6),rep(-0.02,6),rep(0.02,6),rep(0.02,6)))
+  
+```
+]
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# Processing Continuous Variables
+
+---
+
+## Centering and Scaling
+
+---
+
+## Box-Cox transformation
+
+---
+
+## Logit transformation
+
+---
+
+## Polynomial basis expansions
+
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# Handling Missing Data
+
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# the `recipes` package
+
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+# Processing Text Data with pre-trained NLP models
+
+
