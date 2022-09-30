@@ -2589,7 +2589,7 @@ id="toc-wrapping-up-using-the-recipes-package">6. Wrapping-up using the
 }
 
 </style>
-<p>[Updated: Mon, Sep 26, 2022 - 16:31:48 ]</p>
+<p>[Updated: Fri, Sep 30, 2022 - 10:49:47 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3238,25 +3238,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2578162 
- - mean (before standardization) = -3.278727 
- - sd (before standardization) = 0.165809 </code></pre>
+ - lambda = 0.2653499 
+ - mean (before standardization) = -3.22742 
+ - sd (before standardization) = 0.1670159 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.96     4.98
+X1    1 1000    0  0      0       0   0   0 0.01  0.01 2.18     7.79
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>   vars    n  mean   sd median trimmed  mad   min  max range  skew
-X1    1 1000 -3.28 0.17  -3.28   -3.28 0.17 -3.75 -2.8  0.96 -0.02
+<pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew
+X1    1 1000 -3.23 0.17  -3.23   -3.23 0.17 -3.71 -2.68  1.03 -0.04
    kurtosis   se
-X1    -0.12 0.01</code></pre>
+X1    -0.23 0.01</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
