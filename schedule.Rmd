@@ -117,9 +117,6 @@ tbl(tab,d='3-Oct')
 tbl(tab,d='10-Oct')
 
 ```
-<br>
-<br>
-<br>
 
 ### Week 3: Introduction to Linear Regression, Bias/Variance Tradeoff, and Cross-validation
 
@@ -128,7 +125,4 @@ tbl(tab,d='10-Oct')
 tbl(tab,d='17-Oct')
 
 ```
-<br>
-<br>
-<br>
 

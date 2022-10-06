@@ -455,7 +455,7 @@ readability_sub[,c('target','pred')]
 
   mean(abs(readability_sub$target - readability_sub$pred))
   
-# Mean absolute error
+# Mean squared error
 
   mean((readability_sub$target - readability_sub$pred)^2)
 
