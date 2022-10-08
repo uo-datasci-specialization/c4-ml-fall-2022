@@ -107,9 +107,6 @@ ggplot(data=readability_sub,aes(x=V220,y=target))+
 
 ```
 
-Let's consider a simple linear regression model such that the readability score is the outcome ($Y$) and average word length is the predictor($X$). Our regression model would be
-
-$$Y = \beta_0  + \beta_1X + \epsilon.$$
 Let's consider a simple linear regression model: the readability score is the outcome ($Y$), and Feature 220 is the predictor($X$). Our regression model would be
 $$Y = \beta_0  + \beta_1X + \epsilon.$$
 
@@ -332,7 +329,7 @@ Once we find the best estimates for the model coefficients, we can also calculat
 $$\boldsymbol{\hat{Y}} = \mathbf{X} \hat{\boldsymbol{\beta}} $$
 
 $$ \boldsymbol{\hat{\epsilon}} = \boldsymbol{Y} - \hat{\boldsymbol{Y}} $$
-$$ RSS = \boldsymbol{\hat{\epsilon}^T} \boldsymbol{\hat{\epsilon}} $$
+$$ SSR = \boldsymbol{\hat{\epsilon}^T} \boldsymbol{\hat{\epsilon}} $$
 
 ```{r, echo=TRUE,eval=TRUE,class.source='klippy',class.source = 'fold-show',message=FALSE, warning=FALSE,fig.width=8,fig.height=8}
 
@@ -343,9 +340,9 @@ Y_hat
 E <- Y - Y_hat
 E
 
-RSS <- t(E)%*%E
+SRR <- t(E)%*%E
 
-RSS
+SRR
 ```
 
 Note that the matrix formulation is generalized to a regression model for more than one predictor. When there are more predictors in the model, the dimensions of the design matrix ($\mathbf{X}$) and regression coefficient matrix ($\boldsymbol{\beta}$) will be different, but the matrix calculations will be identical. It isn't easy to visualize the surface we are trying to minimize beyond two coefficients. Still, we know that the matrix solution will always provide us with the set of coefficients that yields the least amount of error in our predictions.
@@ -376,9 +373,9 @@ Y_hat <-  X%*%beta
 
 E <- Y - Y_hat
 
-RSS <- t(E)%*%E
+SSR <- t(E)%*%E
 
-RSS
+SSR
 ```
 
 ## `lm()` function
@@ -387,8 +384,7 @@ While learning the inner mechanics of how numbers work behind the scenes is alwa
 
 Let's fit the models we discussed in the earlier section using the `lm()` function and see if we get the same regression coefficients.
 
-
-**Model 1: Predicting readability scores from average word length **
+**Model 1: Predicting readability scores from Feature 220 **
 
 ```{r, echo=TRUE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=8,fig.height=8}
 
@@ -398,9 +394,9 @@ summary(mod)
 
 ```
 
-In the **Coefficients** table, the numbers under the **Estimate** column are the estimated regression coefficients, identical to the numbers we obtained before using matrix calculations. We ignore the other numbers in this table since our focus in this class is not significance testing. Another number in this table is **Residual Standard Error (RSE)**, and this number is directly related to the Residual Sum of Squares (RSS) for this model. Note that we obtained a value of 14.566 for RSS when we fitted the model. The relationship between RSS and RSE is
+In the **Coefficients** table, the numbers under the **Estimate** column are the estimated regression coefficients, identical to the numbers we obtained before using matrix calculations. We ignore the other numbers in this table since our focus in this class is not significance testing. Another number in this table is **Residual Standard Error (RSE)**, and this number is directly related to the Sum of Squared Residuals (SSR) for this model. Note that we obtained a value of 14.566 for SSR when we fitted the model. The relationship between SSR and RSE is
 
-$$RSE = \sqrt{\frac{RSS}{df_{regression}}} = \sqrt{\frac{RSS}{N-k}}, $$
+$$RSE = \sqrt{\frac{SSR}{df_{regression}}} = \sqrt{\frac{SSR}{N-k}}, $$
 
 where the degrees of freedom for the regression model, in this case, are equal to the difference between the number of observations ($N$) and the number of coefficients in the model ($k$). 
 
@@ -408,7 +404,7 @@ $$RSE = \sqrt{\frac{14.566}{20-2}} = 0.8996.$$
 
 RSE is a measure that summarizes the amount of uncertainty for individual predictions. Another relevant number reported is the R-squared (0.2596), which is the square of the correlation between predicted and observed values.
 
-**Model 2: Predicting readability scores from average word length and number of sentences**
+**Model 2: Predicting readability scores from Feature 220 and Feature 166**
 
 ```{r, echo=TRUE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=8,fig.height=8}
 
@@ -471,32 +467,32 @@ Another metric that may give a useful insight about a model's predictive perform
 
 In our case, if we use the mean to predict the outcome for each observation, the sum of squared error would be equal to 17.733
 
-$$ SSE = \sum_{i=1}^{N} (y-\bar{y})^2$$
+$$ SSR_{null} = \sum_{i=1}^{N} (y-\bar{y})^2$$
 
 ```{r, echo=TRUE,eval=TRUE,class.source='klippy',class.source = 'fold-show',message=FALSE, warning=FALSE}
 
 y_bar <- mean(readability_sub$target)
 
-sse_null <- sum((readability_sub$target-y_bar)^2)
+ssr_null <- sum((readability_sub$target-y_bar)^2)
 
-sse_null
+ssr_null
 ```
 
 Instead, if we rely on our model to predict the outcome, the sum of squared error would be equal to 14.495.
 
 ```{r, echo=TRUE,eval=TRUE,class.source='klippy',class.source = 'fold-show',message=FALSE, warning=FALSE}
-sse_model <- sum((readability_sub$target - readability_sub$pred)^2)
+ssr_model <- sum((readability_sub$target - readability_sub$pred)^2)
 
-sse_model
+ssr_model
 ```
 
 By using our model instead of a simple mean, we improved our predictions such that the total amount of error is reduced from 17.733 to 14.495. Therefore, we can say that the total amount of prediction error is reduced by about 18.3% when we use our model instead of a simple null model.
 
-$$ 1-\frac{SSE_{model}}{SSE_{null}} $$
+$$ 1-\frac{SSR_{model}}{SSR_{null}} $$
 
 ```{r, echo=TRUE,eval=TRUE,class.source='klippy',class.source = 'fold-show',message=FALSE, warning=FALSE}
-1 - (sse_model/sse_null)
+1 - (ssr_model/ssr_null)
 ```
 
-In other words, $SSE_null$ provides a reference point when you do the worst job possible (using mean). If we have a perfect model, then SSE would be 0, the best job you could do. So, we can evaluate a model's predictive performance by measuring where it stands between these two extreme points. 
+In other words, $SSR_{null}$ provides a reference point when you do the worst job possible (using mean for predictions). If we have a perfect model, then SSR would be 0, the best job you could do. So, we can evaluate a model's predictive performance by measuring where it stands between these two extreme points. 
 
