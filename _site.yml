@@ -86,6 +86,22 @@ navbar:
         
         - text: "Notebook-2b"
           href: https://www.kaggle.com/code/uocoeeds/lecture-2b-data-preprocessing-ii
+          
+          
+        - text: "The {recipes} demo"
+          href: https://www.kaggle.com/code/uocoeeds/the-recipes-package-demo
+          
+          
+        - text: "Notebook-3a"
+          href: https://www.kaggle.com/code/uocoeeds/lecture-3a-overview-of-linear-regression
+          
+          
+        - text: "Notebook-3b"
+          href: https://www.kaggle.com/code/uocoeeds/lecture-3b-review-of-bias-variance-tradeoff
+          
+          
+        - text: "Building Linear Models with `caret`"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-with-cross-validation
               
           
     - text: "Slides"
@@ -95,6 +111,9 @@ navbar:
         
         - text: "Week 2"
           href: slides/slide2.html
+          
+        - text: "Week 3"
+          href: slides/slide3.html
           
     
     - text: "Assignments"

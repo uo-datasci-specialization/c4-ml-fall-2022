@@ -56,7 +56,7 @@ output:
 }
 
 .tiny .remark-code { /*Change made here*/
-  font-size: 60% !important;
+  font-size: 75% !important;
 }
 
 .tiny2 .remark-code { /*Change made here*/
@@ -453,7 +453,7 @@ Could you find another set of coefficients that can do a better job in terms of 
 
 ---
 
-```{r, echo=TRUE,eval=FALSE,message=FALSE, warning=FALSE,fig.width=8,fig.height=6}
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=8,fig.height=6}
 
 grid <- read.csv(here('data/grid_regression.csv'),header=TRUE)
 
@@ -793,6 +793,631 @@ $$1-\frac{SSR_{model}}{SSR_{null}}$$
 # Bias - Variance Tradeoff for Predictive Models
 ---
 
+## Bias - Variance Tradeoff
+
+When we use a model to predict an outcome, there are two primary sources of error: 
+
+- **Model Error**: No model is a complete representation of truth underlying observed data, every model is misspecified. Conceptually, we can define the model error as the distance between the model and the true generating mechanism underlying data. Technically, for a given set of predictors, it is the difference between the expected value predicted by the model and the true value underlying data. The term **bias** is also commonly used for model error.
+
+- **Sampling Error**: Given that the amount of data is fixed during any modeling process, it will decrease the stability of parameter estimates for models with increasing complexity across samples drawn from the same population. Consequently, this will increase the variance of predictions (more variability of a predicted value across different samples) for a given set of the same predictors. The terms **estimation error** or **variance** is also used for sampling error.
+
+The essence of any modeling activity is to balance these two sources of error and find a stable model (generalizable across different samples) with the least amount of bias.
+
+---
+
+## A simple Monte Carlo experimentation 
+
+Suppose that there is a true generating model underlying some observed data. This model is
+
+$$y = e^{(x-0.3)^2} - 1 + \epsilon,$$
+- $x$ is a predictor variable equally spaced and ranges from 0 to 1, 
+
+- $\epsilon$ is a random error component that follows a normal distribution with a mean of zero and a standard deviation of 0.1, 
+
+- and $y$ is the outcome variable. 
+
+Suppose we simulate a small observed data following this model with a sample size of 20. Then, we use a straightforward linear model to represent the observed simulated data.
+
+$$
+y = \beta_0 + \beta_1x + \epsilon
+$$
+
+---
+
+.single[.tiny[
+
+```{r, echo=TRUE,eval=TRUE,message=FALSE, warning=FALSE,comment=''}
+
+set.seed(09282021)
+
+N = 20
+
+x <- seq(0,1,length=20)
+
+e <- rnorm(20,0,.1)
+
+y <- exp((x-0.3)^2) - 1 + e
 
 
+mod <- lm(y ~ 1 + x)
+mod
 
+round(predict(mod),3)
+```
+
+]]
+---
+
+.pull-left[
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=6,fig.height=6}
+
+ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  geom_point(aes(x=x,y=y))+
+  geom_line(aes(x=x,y=predict(mod)),lty=2,col='gray')+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))
+
+```
+
+]
+
+.pull-right[
+
+- The solid line represents the true nature of the relationship between $x$ and $y$. 
+
+- The observed data points do not lie on this line due to the random error component (noise). 
+
+- If we use a simple linear model, the gray dashed line represents the predicted relationship between $x$ and $y$. 
+
+]
+
+- This demonstration only represents a single dataset. Suppose that we repeat the same process ten times. 
+
+- We will produce ten different datasets with the same size (N=20) using the same predictor values, $x$, and true data generating model. Then, we will fit a simple linear model to each of these ten datasets. 
+
+---
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=6,fig.height=6}
+
+set.seed(09282021)
+
+E  <- vector('list',10)
+Y  <- vector('list',10)
+M1 <- vector('list',10)
+
+N = 20
+
+x <- seq(0,1,length=N)
+
+for(i in 1:10){
+  
+  E[[i]]  <- rnorm(N,0,.1)
+  Y[[i]]  <- exp((x-0.3)^2) - 1 + E[[i]]
+  
+  M1[[i]] <- lm(Y[[i]] ~ 1 + x)
+}
+```
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,fig.width=6,fig.height=6}
+
+p.1 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))
+
+for(i in 1:10){
+  p.1 <- p.1 + geom_line(aes_string(x=x,y=predict(M1[[i]])),col='gray',lty=2)
+}
+
+p.1
+```
+
+---
+<br>
+
+What can you say about the bias and variance of model predictions?
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M1[[i]])
+}
+
+y.true <- exp((x-.3)^2)-1
+Y.true <- matrix(y.true,nrow=20,ncol=30,byrow=FALSE)
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Average <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+
+colnames(yy) <- c('x','y (TRUE)',1:10,'Mean','SD')
+
+round(yy,3) %>%
+  kbl() %>%
+  kable_minimal() %>%
+  add_header_above(c(" " = 2,"Model Predicted Value Across 10 Replications" = 10," " =2)) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                font_size = 10) 
+
+
+yy.linear <- yy[,c('x','y (TRUE)','Mean','SD')]
+colnames(yy.linear) <- c('x','y','Mean','SD')
+```
+
+---
+
+Let's do the same experiment by fitting a more complex 6th-degree polynomial to the same datasets with the same underlying true model.
+
+$$
+y = \beta_0 + \beta_1x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 + \beta_6 x^6 + \epsilon
+$$
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+set.seed(09282021)
+
+E  <- vector('list',10)
+Y  <- vector('list',10)
+M6 <- vector('list',10)
+
+N = 20
+
+x <- seq(0,1,length=N)
+
+for(i in 1:10){
+  
+  E[[i]]  <- rnorm(N,0,.1)
+  Y[[i]]  <- exp((x-0.3)^2) - 1 + E[[i]]
+  
+  M6[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2) + I(x^3) + I(x^4) + I(x^5) + I(x^6))
+}
+```
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,fig.width=5,fig.height=5}
+
+p.6 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))
+
+for(i in 1:10){
+  p.6 <- p.6 + geom_line(aes_string(x=x,y=predict(M6[[i]])),col='gray',lty=2)
+}
+
+p.6
+```
+
+---
+
+How are these numbers different than the numbers when we fitted a simple linear model?
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M6[[i]])
+}
+
+y.true <- exp((x-.3)^2)-1
+Y.true <- matrix(y.true,nrow=20,ncol=30,byrow=FALSE)
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Average <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+
+colnames(yy) <- c('x','y (TRUE)',1:10,'Mean','SD')
+
+round(yy,3) %>%
+  kbl() %>%
+  kable_minimal() %>%
+  add_header_above(c(" " = 2,"Model Predicted Value Across 10 Replications" = 10," " =2)) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                font_size = 10) 
+
+yy.poly <- yy[,c('x','y (TRUE)','Mean','SD')]
+colnames(yy.poly) <- c('x','y','Mean','SD')
+```
+
+---
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,fig.width=9,fig.height=6}
+
+p1 <- ggplot(data=yy.linear,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('Linear Model')
+
+p2 <- ggplot(data=yy.poly,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('6th Degree Polynomial Model')
+
+grid.arrange(p1,p2,nrow=1)
+```
+
+---
+
+We can expand our experiment and examine a range of models from linear to the 6th-degree polynomial.
+
+$$y = \beta_0 + \beta_1x + \epsilon$$
+
+$$y = \beta_0 + \beta_1x + \beta_2 x^2 + \epsilon$$
+
+$$y = \beta_0 + \beta_1x + \beta_2 x^2 + \beta_3 x^3 + \epsilon$$
+
+$$y = \beta_0 + \beta_1x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \epsilon$$
+
+$$y = \beta_0 + \beta_1x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5  + \epsilon$$
+
+$$y = \beta_0 + \beta_1x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 + \beta_6 x^6 + \epsilon$$
+
+---
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+
+set.seed(09282021)
+
+E  <- vector('list',10)
+Y  <- vector('list',10)
+M1 <- vector('list',10)
+M2 <- vector('list',10)
+M3 <- vector('list',10)
+M4 <- vector('list',10)
+M5 <- vector('list',10)
+M6 <- vector('list',10)
+
+
+N = 20
+
+x <- seq(0,1,length=N)
+
+for(i in 1:10){
+  
+  E[[i]]  <- rnorm(N,0,.1)
+  Y[[i]]  <- exp((x-0.3)^2) - 1 + E[[i]]
+  
+  M1[[i]] <- lm(Y[[i]] ~ 1 + x)
+  M2[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2))
+  M3[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2) + I(x^3))
+  M4[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2) + I(x^3) + I(x^4))
+  M5[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2) + I(x^3) + I(x^4) + I(x^5))
+  M6[[i]] <- lm(Y[[i]] ~ 1 + x + I(x^2) + I(x^3) + I(x^4) + I(x^5) + I(x^6))
+}
+```
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE,warning=FALSE,fig.width=6,fig.height=6}
+
+N = 20
+x <- seq(0,1,length=N)
+y.true <- exp((x-.3)^2)-1
+Y.true <- matrix(y.true,nrow=20,ncol=30,byrow=FALSE)
+
+##################################################
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M1[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.1 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.1) <- c('x','y','Mean','SD')
+
+##################################################
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M2[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.2 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.2) <- c('x','y','Mean','SD')
+
+##################################################
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M3[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.3 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.3) <- c('x','y','Mean','SD')
+
+
+##################################################
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M4[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.4 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.4) <- c('x','y','Mean','SD')
+
+
+##################################################
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M5[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.5 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.5) <- c('x','y','Mean','SD')
+
+
+##################################################
+
+out <- matrix(nrow=20,ncol=10)
+for(i in 1:10){
+  out[,i] <- predict(M6[[i]])
+}
+
+yy <- as.data.frame(cbind(x,y.true,out))
+yy$Mean <- rowMeans(yy[,3:11])
+yy$SD <- apply(yy[,3:11],1,sd)
+
+yy.6 <- yy[,c('x','y.true','Mean','SD')]
+colnames(yy.6) <- c('x','y','Mean','SD')
+
+```
+
+
+```{r, echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=9,fig.height=6}
+
+p1 <- ggplot(data=yy.1,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('Linear Model')
+
+p2 <- ggplot(data=yy.2,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('Quadratic Model')
+
+p3 <- ggplot(data=yy.3,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('Qubic Model')
+
+p4 <- ggplot(data=yy.4,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('4th Degree Polynomial Model')
+
+p5 <- ggplot(data=yy.5,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('5th Degree Polynomial Model')
+
+p6 <- ggplot(data=yy.6,aes(x=x,y=y))+
+  geom_line()+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(-0.05,1.05))+
+  ylim(c(-0.25,1))+
+  geom_point(aes(x=x,y=Mean))+
+  geom_errorbar(aes(ymin=Mean - 2*SD, 
+                    ymax=Mean + 2*SD), width=.02)+
+  ggtitle('6th Degree Polynomial Model')
+
+
+p.1 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Linear Model')
+
+for(i in 1:10){
+  p.1 <- p.1 + geom_line(aes_string(x=x,y=predict(M1[[i]])),col='gray',lty=2)
+}
+
+
+p.2 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Quadratic Model')
+
+for(i in 1:10){
+  p.2 <- p.2 + geom_line(aes_string(x=x,y=predict(M2[[i]])),col='gray',lty=2)
+}
+
+p.3 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Qubic Model')
+
+for(i in 1:10){
+  p.3 <- p.3 + geom_line(aes_string(x=x,y=predict(M3[[i]])),col='gray',lty=2)
+}
+
+p.4 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Quartic Model')
+
+for(i in 1:10){
+  p.4 <- p.4 + geom_line(aes_string(x=x,y=predict(M4[[i]])),col='gray',lty=2)
+}
+
+p.5 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Quintic Model')
+
+for(i in 1:10){
+  p.5 <- p.5 + geom_line(aes_string(x=x,y=predict(M5[[i]])),col='gray',lty=2)
+}
+
+p.6 <- ggplot()+
+  geom_function(fun = function(x) exp((x-.3)^2)-1)+
+  theme_bw()+
+  xlab('x')+
+  ylab('y')+
+  xlim(c(0,1))+
+  ylim(c(-0.25,1))+
+  ggtitle('Sextic Model')
+
+for(i in 1:10){
+  p.6 <- p.6 + geom_line(aes_string(x=x,y=predict(M6[[i]])),col='gray',lty=2)
+}
+
+grid.arrange(p1,p2,p3,p4,p5,p6,nrow=2,ncol=3)
+```
+
+If you had to choose one of these models for one of the simulated datasets, which one would you choose? Why?
+
+---
+
+Could you find that sweet spot that provides a reasonable representation of data and a reasonable amount of generalizability (consistent/stable predictions for observations other than the ones you used to develop the model)? 
+
+```{r, echo=FALSE,eval=TRUE,fig.align='center',fig.height=6,fig.width=8}
+
+knitr::include_graphics('bias-variance_reduced.png',dpi = 100)
+
+```
+
+---
+
+## Use of Resampling Methods to Balance Model Bias and Model Variance
+
+- Certain strategies are applied to avoid overfitting and find the sweet spot between model bias and model variance. 
+
+- This process is nicely illustrated in [Boehmke and Greenwell (2020, Figure 2.1)](https://bradleyboehmke.github.io/HOML/process.html)
+
+```{r, echo=FALSE,eval=TRUE,fig.align='center',fig.height=3,fig.width=8}
+
+knitr::include_graphics('modeling_process2.png')
+
+```
+
+---
+
+- **Resampling strategies**:
+
+  - 80-20 or 70-30 splits for training vs. test data
+  
+  - Simple random sampling
+  
+  - Stratified sampling
+  
+  - Down-sampling and up-sampling
+  
+- **k-fold** cross validation when training the model:
+
+  - the training sample is randomly partitioned into *k* sets of equal size. 
+  
+  - A model is fitted to *k*-1 folds, and the remaining fold is used to test the model performance. 
+  
+  - Repeated *k* times by treating a different fold as a hold-out set. 
+  
+  - The performance evaluation metric is aggregated (e.g., average) across *k* replications to get a *k*-fold cross-validation estimate of the performance evaluation metric
+  
+- Be mindful about data leakage for longitudinal data when creating training and test splits and partitions for the k-fold cross-validation
+
+---
+
+Please review the following notebook to see a demonstration of how to apply concepts discussed so far. This notebook builds a naive model to predict the readability score for a given text.
+
+[Building a linear prediction model with and without cross-validation using the caret package](https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-with-cross-validation)
