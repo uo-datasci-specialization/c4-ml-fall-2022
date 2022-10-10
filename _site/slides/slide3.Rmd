@@ -793,6 +793,30 @@ $$1-\frac{SSR_{model}}{SSR_{null}}$$
 # Bias - Variance Tradeoff for Predictive Models
 ---
 
+## How many parameters does it take to draw an elephant?
+
+.pull-left[
+```{r, echo=FALSE,eval=TRUE,class.source='klippy',class.source = 'fold-show',message=FALSE, warning=FALSE,fig.width=4,fig.height=4}
+
+knitr::include_graphics('elephant.png')
+
+```
+]
+.pull-right[
+
+- https://kourentzes.shinyapps.io/FitElephant/
+
+- Increase the number of parameters in this model from 1 to 70, and the model predictions will start to look like an elephant. 
+
+- Explore to find the number of parameters you would use to model an elephant. 
+
+  - Start manipulating the **p** (number of parameters) and examine how the model predicted contour changes. 
+  
+  - Stop when you believe you can convince someone else that it looks like an elephant.
+]
+
+---
+
 ## Bias - Variance Tradeoff
 
 When we use a model to predict an outcome, there are two primary sources of error: 
