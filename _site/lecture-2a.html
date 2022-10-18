@@ -2452,8 +2452,7 @@ Lecture Notes
 <a href="lecture-2b.html">Lecture-2b</a>
 <a href="lecture-3a.html">Lecture-3a</a>
 <a href="lecture-3b.html">Lecture-3b</a>
-<span class="nav-dropdown-header">Lecture-4a</span>
-<span class="nav-dropdown-header">Lecture-4b</span>
+<a href="lecture-4.html">Lecture-4a</a>
 <span class="nav-dropdown-header">Lecture-5a</span>
 <span class="nav-dropdown-header">Lecture-5b</span>
 <span class="nav-dropdown-header">Lecture-6a</span>
@@ -2478,6 +2477,11 @@ Kaggle Notebooks
 <a href="https://www.kaggle.com/code/uocoeeds/lecture-3a-overview-of-linear-regression">Notebook-3a</a>
 <a href="https://www.kaggle.com/code/uocoeeds/lecture-3b-review-of-bias-variance-tradeoff">Notebook-3b</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-with-cross-validation">Building Linear Models with `caret`</a>
+<a href="https://www.kaggle.com/code/uocoeeds/lecture-4-regularized-penalized-regression">Notebook-4</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-ridge-regression-model">Building a Ridge Regression Model</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-lasso-regression-model">Building a Lasso Regression Model</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-regression-model-with-elastic-net">Building an Elastic Net Model</a>
+<a href="https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text">Using the Existing Models to Predict Outcome for New Observations</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2489,7 +2493,8 @@ Slides
 <div class="nav-dropdown-content">
 <a href="slides/slide1.html">Week 1</a>
 <a href="slides/slide2.html">Week 2</a>
-<a href="slides/slide3.html">Week 3</a>
+<a href="slides/slide3.html">Week 3 &amp; 4</a>
+<a href="slides/slide4.html">Week 5</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2499,7 +2504,7 @@ Assignments
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="assignment1.html">Assignment1</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-1/">Assignment1</a>
 </div>
 </div>
 <a href="https://github.com/uo-datasci-specialization/c4-ml-fall-2022">
@@ -2594,7 +2599,7 @@ id="toc-wrapping-up-using-the-recipes-package">6. Wrapping-up using the
 }
 
 </style>
-<p>[Updated: Mon, Oct 10, 2022 - 12:09:33 ]</p>
+<p>[Updated: Mon, Oct 17, 2022 - 17:54:31 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3243,25 +3248,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2683307 
- - mean (before standardization) = -3.198798 
- - sd (before standardization) = 0.1623464 </code></pre>
+ - lambda = 0.2753075 
+ - mean (before standardization) = -3.140864 
+ - sd (before standardization) = 0.1425155 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.86      4.6
+X1    1 1000    0  0      0       0   0   0 0.01  0.01  2.3      9.7
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>   vars    n mean   sd median trimmed  mad   min   max range  skew
-X1    1 1000 -3.2 0.16  -3.19    -3.2 0.17 -3.67 -2.73  0.93 -0.05
-   kurtosis   se
-X1    -0.36 0.01</code></pre>
+<pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew
+X1    1 1000 -3.14 0.14  -3.14   -3.14 0.14 -3.55 -2.62  0.93 -0.03
+   kurtosis se
+X1    -0.13  0</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>

@@ -47,11 +47,8 @@ navbar:
         - text: "Lecture-3b"
           href: lecture-3b.html
           
-        - text: "Lecture-4a"
-          href: 
-          
-        - text: "Lecture-4b"
-          href: 
+        - text: "Lecture-4"
+          href: lecture-4.html
           
         - text: "Lecture-5a"
           href: 
@@ -76,6 +73,7 @@ navbar:
         
         - text: "Lecture-8b"
           href:   
+          
     - text: "Kaggle Notebooks"
       menu:
         - text: "Notebook-1"
@@ -87,22 +85,33 @@ navbar:
         - text: "Notebook-2b"
           href: https://www.kaggle.com/code/uocoeeds/lecture-2b-data-preprocessing-ii
           
-          
         - text: "The {recipes} demo"
           href: https://www.kaggle.com/code/uocoeeds/the-recipes-package-demo
-          
           
         - text: "Notebook-3a"
           href: https://www.kaggle.com/code/uocoeeds/lecture-3a-overview-of-linear-regression
           
-          
         - text: "Notebook-3b"
           href: https://www.kaggle.com/code/uocoeeds/lecture-3b-review-of-bias-variance-tradeoff
           
-          
         - text: "Building Linear Models with `caret`"
           href: https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-with-cross-validation
-              
+
+        - text: "Notebook-4"
+          href: https://www.kaggle.com/code/uocoeeds/lecture-4-regularized-penalized-regression
+          
+        - text: "Building a Ridge Regression Model"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-ridge-regression-model
+          
+        - text: "Building a Lasso Regression Model"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-lasso-regression-model
+          
+        - text: "Building an Elastic Net Model"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-regression-model-with-elastic-net
+          
+        - text: "Using the Existing Models to Predict Outcome for New Observations"
+          href: https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text
+          
           
     - text: "Slides"
       menu:
@@ -112,14 +121,17 @@ navbar:
         - text: "Week 2"
           href: slides/slide2.html
           
-        - text: "Week 3"
+        - text: "Week 3 & 4"
           href: slides/slide3.html
+          
+        - text: "Week 5"
+          href: slides/slide4.html
           
     
     - text: "Assignments"
       menu:
         - text: "Assignment1"
-          href: assignment1.html
+          href: https://www.kaggle.com/code/uocoeeds/assignment-1/
           
     - icon: fa fa-github
       href: https://github.com/uo-datasci-specialization/c4-ml-fall-2022

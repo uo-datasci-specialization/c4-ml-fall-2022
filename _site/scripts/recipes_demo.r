@@ -94,6 +94,17 @@ blueprint <- recipe(x     = d,
 
 blueprint
 
+
+
+
+
+
+
+
+
+
+
+
 # ### Step 2: Train
 # 
 # We are going to mix the ingredients in the recipe by using the `prep` 
@@ -111,6 +122,8 @@ prepare
 # we used to prepare the recipe or a new dataset that has the same data 
 # structure. In either case, since there was no process integrated in our 
 # recipe, it will return the exact same input data.
+
+
 
 baked_d <- bake(prepare, 
                 new_data = d)
@@ -137,11 +150,22 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE)
 
 
 blueprint
+
+
+
+
+
+
+
+
+
+
+
+
 
 # In the training case, `prep` function will learn about the different 
 # levels of the Education_Level variable and will create the coding 
@@ -153,17 +177,38 @@ blueprint
 # | High School Diploma   |     0            |       1          |        0         |
 # | Less than HS diploma  |     0            |       0          |        1         | 
 
+
+
+
+
+
 prepare   <- prep(blueprint, 
                   training = d)
 prepare
 
+
+
+
+
+
+
+
+
+
+
+
 # Now, we can apply the prepared recipe to any dataset. Examine the output, 
 # and note the changes in the returned data object. 
+
+
 
 baked_d <- bake(prepare, 
                 new_data = d)
 
 baked_d
+
+
+
 
 
 baked_d_new <- bake(prepare, 
@@ -186,10 +231,12 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors())
+
+
+
+
 
 prepare   <- prep(blueprint, 
                   training = d)
@@ -221,12 +268,19 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors())
+
+
+
+
+
+
+
+
+
+
 
 prepare   <- prep(blueprint, 
                   training = d)
@@ -256,14 +310,13 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors()) %>%
-  
   step_impute_mean(all_numeric_predictors()) 
+
+
+
 
 prepare   <- prep(blueprint, 
                   training = d)
@@ -320,13 +373,9 @@ blueprint <- recipe(x     = d,
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
   
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors()) %>%
-  
   step_impute_mean(all_numeric_predictors())  %>%
-  
   step_poly('Dependents',degree=3)
 
 
@@ -357,17 +406,11 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors()) %>%
-  
   step_impute_mean(all_numeric_predictors())  %>%
-  
   step_poly('Dependents',degree=3) %>%
-  
   step_BoxCox('Avg_Days_per_DrugTest')
 
 
@@ -399,19 +442,12 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors()) %>%
-  
   step_impute_mean(all_numeric_predictors())  %>%
-  
   step_poly('Dependents',degree=3) %>%
-  
   step_BoxCox('Avg_Days_per_DrugTest') %>%
-  
   step_normalize('Avg_Days_per_DrugTest')
 
 
@@ -439,21 +475,13 @@ blueprint <- recipe(x     = d,
                               'DrugTests_Cocaine_Positive',
                               'Recidivism_Arrest_Year2'),
                     roles = c('ID',rep('predictor',5),'outcome')) %>% 
-  
   step_dummy('Education_Level',one_hot=TRUE) %>%
-  
   step_indicate_na(all_predictors()) %>%
-  
   step_zv(all_predictors()) %>%
-  
   step_impute_mean(all_numeric_predictors())  %>%
-  
   step_poly('Dependents',degree=3) %>%
-  
   step_BoxCox('Avg_Days_per_DrugTest') %>%
-  
   step_normalize('Avg_Days_per_DrugTest') %>%
-  
   step_logit('DrugTests_Cocaine_Positive',offset = 0.001)
 
 

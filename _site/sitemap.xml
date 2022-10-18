@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>https://edld654-fall22.netlify.app/assignment1.html</loc>
-    <lastmod>2022-06-22T13:21:29-07:00</lastmod>
-  </url>
-  <url>
     <loc>https://edld654-fall22.netlify.app/</loc>
     <lastmod>2022-09-26T12:45:41-07:00</lastmod>
   </url>
@@ -29,12 +25,16 @@
     <lastmod>2022-10-10T10:49:26-07:00</lastmod>
   </url>
   <url>
+    <loc>https://edld654-fall22.netlify.app/lecture-4.html</loc>
+    <lastmod>2022-10-17T17:33:32-07:00</lastmod>
+  </url>
+  <url>
     <loc>https://edld654-fall22.netlify.app/LICENSE.html</loc>
-    <lastmod>2022-10-10T12:10:54-07:00</lastmod>
+    <lastmod>2022-10-17T17:56:01-07:00</lastmod>
   </url>
   <url>
     <loc>https://edld654-fall22.netlify.app/schedule.html</loc>
-    <lastmod>2022-10-05T16:59:59-07:00</lastmod>
+    <lastmod>2022-10-17T17:42:34-07:00</lastmod>
   </url>
   <url>
     <loc>https://edld654-fall22.netlify.app/syllabus.html</loc>
