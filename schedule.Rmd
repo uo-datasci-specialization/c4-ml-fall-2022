@@ -126,7 +126,7 @@ tbl(tab,d='17-Oct & 24-Oct')
 
 ```
 
-### Week 5: 
+### Week 5: Regularized Linear Regression
 ```{r}
 
 tbl(tab,d='31-Oct')
