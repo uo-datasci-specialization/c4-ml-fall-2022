@@ -50,12 +50,9 @@ navbar:
         - text: "Lecture-4"
           href: lecture-4.html
           
-        - text: "Lecture-5a"
-          href: 
-          
-        - text: "Lecture-5b"
-          href: 
-          
+        - text: "Lecture-5"
+          href: lecture-5.html
+
         - text: "Lecture-6a"
           href: 
           
@@ -111,8 +108,19 @@ navbar:
           
         - text: "Using the Existing Models to Predict Outcome for New Observations"
           href: https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text
+
+        - text: "Building a Logistic Regression Model"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-logistic-regression-model/notebook
           
-          
+        - text: "Building a Classification Model with Ridge Penalty"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/
+
+        - text: "Building a Classification Model with Lasso Penalty"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty
+           
+        - text: "Building a Classification Model with Elastic Net"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net
+           
     - text: "Slides"
       menu:
         - text: "Week 1"
@@ -126,12 +134,18 @@ navbar:
           
         - text: "Week 5"
           href: slides/slide4.html
+ 
+        - text: "Week 6 & 7"
+          href: slides/slide5.html
           
     
     - text: "Assignments"
       menu:
         - text: "Assignment1"
           href: https://www.kaggle.com/code/uocoeeds/assignment-1/
+          
+        - text: "Assignment2"
+          href: https://www.kaggle.com/code/uocoeeds/assignment-2
           
     - icon: fa fa-github
       href: https://github.com/uo-datasci-specialization/c4-ml-fall-2022

@@ -133,4 +133,10 @@ tbl(tab,d='31-Oct')
 
 ```
 
+### Week 6 & 7: (Regularized) Logistic Regression
+```{r}
+
+tbl(tab,d='7-Nov & 14-Nov')
+
+```
 

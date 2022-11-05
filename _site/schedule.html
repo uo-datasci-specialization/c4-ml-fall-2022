@@ -2121,8 +2121,7 @@ Lecture Notes
 <a href="lecture-3a.html">Lecture-3a</a>
 <a href="lecture-3b.html">Lecture-3b</a>
 <a href="lecture-4.html">Lecture-4</a>
-<span class="nav-dropdown-header">Lecture-5a</span>
-<span class="nav-dropdown-header">Lecture-5b</span>
+<a href="lecture-5.html">Lecture-5</a>
 <span class="nav-dropdown-header">Lecture-6a</span>
 <span class="nav-dropdown-header">Lecture-6b</span>
 <span class="nav-dropdown-header">Lecture-7a</span>
@@ -2150,6 +2149,10 @@ Kaggle Notebooks
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-lasso-regression-model">Building a Lasso Regression Model</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-regression-model-with-elastic-net">Building an Elastic Net Model</a>
 <a href="https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text">Using the Existing Models to Predict Outcome for New Observations</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-logistic-regression-model/notebook">Building a Logistic Regression Model</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/">Building a Classification Model with Ridge Penalty</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty">Building a Classification Model with Lasso Penalty</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net">Building a Classification Model with Elastic Net</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2163,6 +2166,7 @@ Slides
 <a href="slides/slide2.html">Week 2</a>
 <a href="slides/slide3.html">Week 3 &amp; 4</a>
 <a href="slides/slide4.html">Week 5</a>
+<a href="slides/slide5.html">Week 6 &amp; 7</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2173,6 +2177,7 @@ Assignments
 </button>
 <div class="nav-dropdown-content">
 <a href="https://www.kaggle.com/code/uocoeeds/assignment-1/">Assignment1</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-2">Assignment2</a>
 </div>
 </div>
 <a href="https://github.com/uo-datasci-specialization/c4-ml-fall-2022">
@@ -2211,6 +2216,9 @@ Tradeoff, and Cross-validation</a></li>
 <li><a href="#week-5-regularized-linear-regression"
 id="toc-week-5-regularized-linear-regression">Week 5: Regularized Linear
 Regression</a></li>
+<li><a href="#week-6-7-regularized-logistic-regression"
+id="toc-week-6-7-regularized-logistic-regression">Week 6 &amp; 7:
+(Regularized) Logistic Regression</a></li>
 </ul>
 </nav>
 </div>
@@ -2428,9 +2436,9 @@ Assignments
 Building a Ridge Regression
 Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-lasso-regression-model" style="     ">Building
 a Lasso Regression
-Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text" style="     ">
+Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-regression-model-with-elastic-net" style="     ">
 Building an Elastic Net
-Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/lecture-4-regularized-penalized-regression" style="     ">
+Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/using-the-prediction-models-for-a-new-text" style="     ">
 Using the Prediction Models for a New Text</a>
 </td>
 <td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
@@ -2445,6 +2453,70 @@ James et al., Ch.6.2</a>
 </td>
 <td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
 <a href="" style="     "></a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="week-6-7-regularized-logistic-regression">Week 6 &amp; 7:
+(Regularized) Logistic Regression</h3>
+<div class="layout-chunk" data-layout="l-body">
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Date
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Notes
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Kaggle Notebooks
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Slides
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Optional Supplemental Readings
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Assignments
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+7-Nov &amp; 14-Nov
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://edld654-fall22.netlify.app/lecture-5.html" style="     ">Lecture-5</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-logistic-regression-model/notebook" style="     ">Building
+a Logistic Regression
+Model</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/" style="     ">Building
+a Classification Model with Ridge
+Penalty</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty" style="     ">Building
+a Classification Model with Lasso
+Penalty</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net" style="     ">Building
+a Classification Model with Elastic Net</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://edld654-fall22.netlify.app/slides/slide5.html" style="     ">Week
+6 &amp; 7</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://bradleyboehmke.github.io/HOML/logistic-regression.html" style="     ">Boehmke
+&amp; Greenwell, Ch.
+5</a><br><a href="https://edld654-fall22.netlify.app/schedule.html" style="     ">
+James et al., Ch.
+4.3</a><br><a href="https://edld654-fall22.netlify.app/schedule.html" style="     ">
+APM, Ch. 12.2 and 12.5</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-2" style="     ">Assignment
+2</a>
 </td>
 </tr>
 </tbody>
