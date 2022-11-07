@@ -818,7 +818,7 @@ ggplot(data = metrics, aes(x=1-tnr,y=tpr))+
   theme_bw()
 ```
 
-ROC may be a useful plot to inform about model's predictive power as well as choosing an optimal cut-off value. The area under the ROC curve (AUC or AUROC) is typically used to evaluate the predictive power of classification models. The diagonal line in this plot represents a hypothetical model with no predictive power and AUC for the diagonal line is 0.5 (it is half of the whole square). The more ROC curve resembles with the diagonal line, less the predictive power is. The solid line is the ROC curve for our predictions in the hypothetical dataset. It is not easy to calculate AUC by hand or straight formula as it requires calculus and numerical approximations. There are many alternatives in R to calculate AUC. We will use the `cutpointr` package as it also provides other tools to select an optimal cut-off point.
+ROC may be a useful plot to inform about model's predictive power as well as choosing an optimal cut-off value. The area under the ROC curve (AUC or AUROC) is typically used to evaluate the predictive power of classification models. The diagonal line in this plot represents a hypothetical model with no predictive power and AUC for the diagonal line is 0.5 (it is half of the whole square). The more ROC curve resembles with the diagonal line, less the predictive power is. It is not easy to calculate AUC by hand or straight formula as it requires calculus and numerical approximations. There are many alternatives in R to calculate AUC. We will use the `cutpointr` package as it also provides other tools to select an optimal cut-off point.
 
 ```{r, echo=TRUE,eval=TRUE,message=FALSE, warning=FALSE,fig.width=6,fig.height=6}
 
