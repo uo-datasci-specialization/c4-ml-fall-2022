@@ -743,21 +743,6 @@ $$ \mathfrak{logL}(\mathbf{Y}|\boldsymbol\beta) = \sum_{i=1}^{N} Y_i \times ln(P
 
 ---
 
-**Cross-entropy --&gt; Negative Log-Likelikelihood**
-
-- The negative of loglikelihood is also sometimes called the cross-entropy loss function. 
-
-- Technically, maximizing the logistic loss function is equivalent to minimizing the cross-entropy loss function. 
-
-- You should be aware of it because, for instance, we will minimize 
-`\(\mathfrak{logL}(\mathbf{Y}|\boldsymbol\beta)\)` when we fit these models using `glmnet`.
-
-
-&lt;center&gt; ![](negloglik.PNG)
-
----
-
-
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -1114,23 +1099,54 @@ Please review the following notebook that builds a classification model using th
 
 - The regularization works similarly in logistic regression, as discussed in linear regression. 
 
-- We add penalty terms to the loss function to avoid large coefficients, and we reduce model variance by including a penalty term in exchange for adding bias. Optimizing the penalty degree via tuning, we can typically get models with better performance than a logistic regression with no regularization.
+- We add penalty terms to the loss function to avoid large coefficients, and we reduce model variance by including a penalty term in exchange for adding bias. 
 
+- Optimizing the penalty degree via tuning, we can typically get models with better performance than a logistic regression with no regularization.
 
-### Ridge Penalty
+.indent[
+
+#### **Logistic Loss with Ridge Penalty**
+
+`$$\mathfrak{logL}(\mathbf{Y}|\boldsymbol\beta) = \left ( \sum_{i=1}^{N} Y_i \times ln(P_i) + (1-Y_i) \times ln(1-P_i) \right ) - \frac{\lambda}{2} \sum_{i=1}^{P}\beta_p^2$$`
+
+#### **Logistic Loss with Lasso Penalty**
+
+`$$\mathfrak{logL}(\mathbf{Y}|\boldsymbol\beta) = \left ( \sum_{i=1}^{N} Y_i \times ln(P_i) + (1-Y_i) \times ln(1-P_i) \right)- \lambda \sum_{i=1}^{P}|\beta_p|$$`
+
+#### **Logistic Loss with Elastic Net**
+
+`$$\mathfrak{logL}(\mathbf{Y}|\boldsymbol\beta) = \left ( \sum_{i=1}^{N} Y_i \times ln(P_i) + (1-Y_i) \times ln(1-P_i) \right)- \left ((1-\alpha)\frac{\lambda}{2} \sum_{i=1}^{P}\beta_p^2 + \alpha  \lambda \sum_{i=1}^{P}|\beta_p| \right)$$`
+]
 
 ---
 
-### Lasso Penalty
+#### **Shrinkage in Logistic Regression Coefficients with Ridge Penalty**
+
+&lt;img src="slide5_files/figure-html/unnamed-chunk-29-1.svg" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
-### Elastic Net
+#### **Shrinkage in Logistic Regression Coefficients with Lasso Penalty**
+
+&lt;img src="slide5_files/figure-html/unnamed-chunk-30-1.svg" style="display: block; margin: auto;" /&gt;
 
 
+---
+
+&lt;br&gt;
+
+### Building a Regularized Logistic Regression Model via `caret`
+
+Please review the following notebooks that build classification models using the regularized logistic regression for the full recidivism dataset.
+
+- [Building a Logistic Regression Model with Ridge Penalty ](https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/)
 
 
+- [Building a Logistic Regression Model with Lasso Penalty ](https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty)
 
+
+- [Building a Logistic Regression Model with Elastic Net ](https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
