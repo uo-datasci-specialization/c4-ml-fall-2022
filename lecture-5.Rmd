@@ -1,5 +1,5 @@
 ---
-title: "An Overview of the Logistic Regression"
+title: "An Overview of the Logistic Regression and Regularization"
 
 author:
   - name: Cengiz Zopluoglu
