@@ -258,7 +258,7 @@ Note that Step 3 applies regardless of the type of outcome. If the outcome varia
 
 Below, I provide an example for both types of outcome using the Readability and Recidivism datasets.
 
-## 3.1. Predicting a continuous outcome with the KNN algorithm (DIY)
+## 3.1. Predicting a continuous outcome with the KNN algorithm
 
 The code below is identical to the code we used in earlier classes for data preparation of the Readability datasets. Note that this is only to demonstrate the logic of model predictions in the context of K-nearest neighbors. So, we are using the whole dataset. In the next section, we will demonstrate the full workflow of model training and tuning with 10-fold cross-validation using the `caret::train()` function. 
 1. Import the data
@@ -579,13 +579,13 @@ Which kernel function should we use for weighing the distance? The type of kerne
 </div>
 ***
 
-# 5. Predicting a continuous outcome with the KNN algorithm (DIY)
+# 5. Predicting a continuous outcome with the KNN algorithm via `caret:train()`
 
 Please review the following notebook that builds a prediction model using the K-nearest neighbor algorithm for the readability dataset.
 
 [Building a Prediction Model using KNN](https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn)
 
-# 6. Predicting a binary outcome with the KNN algorithm
+# 6. Predicting a binary outcome with the KNN algorithm via `caret:train()`
 
 Please review the following notebook that builds a classification model using the K-nearest neighbor algorithm for the full recidivism dataset.
 

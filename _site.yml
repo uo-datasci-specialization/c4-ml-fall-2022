@@ -54,10 +54,10 @@ navbar:
           href: lecture-5.html
 
         - text: "Lecture-6a"
-          href: 
+          href: lecture-6a.html
           
         - text: "Lecture-6b"
-          href: 
+          href: lecture-6b.html
           
         - text: "Lecture-7a"
           href: 
@@ -120,6 +120,19 @@ navbar:
            
         - text: "Building a Classification Model with Elastic Net"
           href: https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net
+ 
+        - text: "Building a Prediction Model with K-nearest neighbors"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn
+
+        - text: "Building a Classification Model with K-nearest neighbors"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn
+          
+        - text: "Building a Prediction Model with a Decision Tree"
+          href: https://www.kaggle.com/uocoeeds/building-a-prediction-model-using-a-decision-tree
+
+        - text: "Building a Classification Model with a Decision Tree"
+          href: https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm
+          
            
     - text: "Slides"
       menu:
@@ -137,7 +150,9 @@ navbar:
  
         - text: "Week 6 & 7"
           href: slides/slide5.html
-          
+
+        - text: "Week 8"
+          href: slides/slide6.html          
     
     - text: "Assignments"
       menu:

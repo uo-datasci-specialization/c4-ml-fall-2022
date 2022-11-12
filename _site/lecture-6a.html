@@ -2558,10 +2558,9 @@ K-Nearest Neighbors</a></li>
 id="toc-prediction-with-k-nearest-neighbors-do-it-yourself">3.
 Prediction with K-Nearest Neighbors (Do-It-Yourself)</a>
 <ul>
-<li><a
-href="#predicting-a-continuous-outcome-with-the-knn-algorithm-diy"
-id="toc-predicting-a-continuous-outcome-with-the-knn-algorithm-diy">3.1.
-Predicting a continuous outcome with the KNN algorithm (DIY)</a></li>
+<li><a href="#predicting-a-continuous-outcome-with-the-knn-algorithm"
+id="toc-predicting-a-continuous-outcome-with-the-knn-algorithm">3.1.
+Predicting a continuous outcome with the KNN algorithm</a></li>
 <li><a href="#predicting-a-binary-outcome-with-the-knn-algorithm"
 id="toc-predicting-a-binary-outcome-with-the-knn-algorithm">3.2.
 Predicting a binary outcome with the KNN algorithm</a></li>
@@ -2570,12 +2569,15 @@ Predicting a binary outcome with the KNN algorithm</a></li>
 id="toc-kernels-to-weight-the-neighbors">4. Kernels to Weight the
 Neighbors</a></li>
 <li><a
-href="#predicting-a-continuous-outcome-with-the-knn-algorithm-diy-1"
-id="toc-predicting-a-continuous-outcome-with-the-knn-algorithm-diy-1">5.
-Predicting a continuous outcome with the KNN algorithm (DIY)</a></li>
-<li><a href="#predicting-a-binary-outcome-with-the-knn-algorithm-1"
-id="toc-predicting-a-binary-outcome-with-the-knn-algorithm-1">6.
-Predicting a binary outcome with the KNN algorithm</a></li>
+href="#predicting-a-continuous-outcome-with-the-knn-algorithm-via-carettrain"
+id="toc-predicting-a-continuous-outcome-with-the-knn-algorithm-via-carettrain">5.
+Predicting a continuous outcome with the KNN algorithm via
+<code>caret:train()</code></a></li>
+<li><a
+href="#predicting-a-binary-outcome-with-the-knn-algorithm-via-carettrain"
+id="toc-predicting-a-binary-outcome-with-the-knn-algorithm-via-carettrain">6.
+Predicting a binary outcome with the KNN algorithm via
+<code>caret:train()</code></a></li>
 </ul>
 </nav>
 </div>
@@ -2597,7 +2599,7 @@ Predicting a binary outcome with the KNN algorithm</a></li>
 
 
 </style>
-<p>[Updated: Thu, Nov 10, 2022 - 15:39:12 ]</p>
+<p>[Updated: Fri, Nov 11, 2022 - 21:13:41 ]</p>
 <h1 id="distance-between-two-vectors">1. Distance Between Two
 Vectors</h1>
 <p>Measuring the distance between two data points is at the core of the
@@ -2626,8 +2628,8 @@ on these three predictors.</p>
 <li><p>Observation 2: (80,90,75)</p></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div id="htmlwidget-26f6b3db5ada2773bff5" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-26f6b3db5ada2773bff5">{"x":{"visdat":{"4de4444080e":["function () ","plotlyVisDat"]},"cur_data":"4de4444080e","attrs":{"4de4444080e":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-35a8cd93cb15f2837cf9" style="width:800px;height:500px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-35a8cd93cb15f2837cf9">{"x":{"visdat":{"504c1e576e9":["function () ","plotlyVisDat"]},"cur_data":"504c1e576e9","attrs":{"504c1e576e9":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <p>If we assume that the <span class="math inline">\(q=1\)</span> for
 the Minkowski equation above, then we can calculate the distance as the
@@ -2647,8 +2649,8 @@ Minkowski equation, it becomes a special case known as <strong>Manhattan
 Distance</strong>. Manhattan Distance between these two data points is
 visualized below.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div id="htmlwidget-0fd65e01f5ed633df3d8" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0fd65e01f5ed633df3d8">{"x":{"visdat":{"4de46f8e653b":["function () ","plotlyVisDat"]},"cur_data":"4de46f8e653b","attrs":{"4de46f8e653b":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4de46f8e653b.1":{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"4de46f8e653b.2":{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"4de46f8e653b.3":{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-24af27422f3eeeeae9a5" style="width:800px;height:500px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-24af27422f3eeeeae9a5">{"x":{"visdat":{"504c72693839":["function () ","plotlyVisDat"]},"cur_data":"504c72693839","attrs":{"504c72693839":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"504c72693839.1":{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"504c72693839.2":{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"504c72693839.3":{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <p>If we assume that the <span class="math inline">\(q=2\)</span> for
 the Minkowski equation above, then we can calculate the distance as the
@@ -2668,8 +2670,8 @@ Minkowski equation, it is also a special case known as <strong>Euclidian
 Distance</strong>. The euclidian distance between these two data points
 is visualized below.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div id="htmlwidget-e4fc6e87ef8c42247811" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e4fc6e87ef8c42247811">{"x":{"visdat":{"4de46b617cfb":["function () ","plotlyVisDat"]},"cur_data":"4de46b617cfb","attrs":{"4de46b617cfb":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4de46b617cfb.1":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bef1a2e7e772a08fde2c" style="width:800px;height:500px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bef1a2e7e772a08fde2c">{"x":{"visdat":{"504c52025612":["function () ","plotlyVisDat"]},"cur_data":"504c52025612","attrs":{"504c52025612":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"504c52025612.1":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <h1 id="k-nearest-neighbors">2. K-Nearest Neighbors</h1>
 <p>Given that there are <span class="math inline">\(N\)</span>
@@ -2706,8 +2708,8 @@ variables (X1, X2, and X3) with the following values.</p>
 10 90 90 95     J</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div id="htmlwidget-c74da71043b0472c7a76" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c74da71043b0472c7a76">{"x":{"visdat":{"4de44b953c8":["function () ","plotlyVisDat"]},"cur_data":"4de44b953c8","attrs":{"4de44b953c8":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4de44b953c8.1":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","marker":{"color":"orange"},"inherit":true},"4de44b953c8.2":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["A","B","C","D","E"],"inherit":true},"4de44b953c8.3":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["F","G","H","I","J"],"inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.5,"y":1,"z":1}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","type":"scatter3d","marker":{"color":"orange","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","type":"scatter3d","text":["A","B","C","D","E"],"marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","type":"scatter3d","text":["F","G","H","I","J"],"marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9db985627a4c3c223b9f" style="width:800px;height:500px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9db985627a4c3c223b9f">{"x":{"visdat":{"504c4226f89":["function () ","plotlyVisDat"]},"cur_data":"504c4226f89","attrs":{"504c4226f89":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"504c4226f89.1":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","marker":{"color":"orange"},"inherit":true},"504c4226f89.2":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["A","B","C","D","E"],"inherit":true},"504c4226f89.3":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["F","G","H","I","J"],"inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.5,"y":1,"z":1}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","type":"scatter3d","marker":{"color":"orange","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","type":"scatter3d","text":["A","B","C","D","E"],"marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","type":"scatter3d","text":["F","G","H","I","J"],"marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <p>Given that there are ten observations, we can calculate the distance
 between all 45 pairs of observations (e.g., Euclidian distance).</p>
@@ -2860,8 +2862,8 @@ K-nearest neighbors as our prediction. If the outcome variable is binary
 K-nearest neighbors yields predicted probabilities for each class.</p>
 <p>Below, I provide an example for both types of outcome using the
 Readability and Recidivism datasets.</p>
-<h2 id="predicting-a-continuous-outcome-with-the-knn-algorithm-diy">3.1.
-Predicting a continuous outcome with the KNN algorithm (DIY)</h2>
+<h2 id="predicting-a-continuous-outcome-with-the-knn-algorithm">3.1.
+Predicting a continuous outcome with the KNN algorithm</h2>
 <p>The code below is identical to the code we used in earlier classes
 for data preparation of the Readability datasets. Note that this is only
 to demonstrate the logic of model predictions in the context of
@@ -3344,15 +3346,19 @@ type of kernel function can also be considered a hyperparameter to
 tune.</p>
 </div>
 <hr />
-<h1 id="predicting-a-continuous-outcome-with-the-knn-algorithm-diy-1">5.
-Predicting a continuous outcome with the KNN algorithm (DIY)</h1>
+<h1
+id="predicting-a-continuous-outcome-with-the-knn-algorithm-via-carettrain">5.
+Predicting a continuous outcome with the KNN algorithm via
+<code>caret:train()</code></h1>
 <p>Please review the following notebook that builds a prediction model
 using the K-nearest neighbor algorithm for the readability dataset.</p>
 <p><a
 href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn">Building
 a Prediction Model using KNN</a></p>
-<h1 id="predicting-a-binary-outcome-with-the-knn-algorithm-1">6.
-Predicting a binary outcome with the KNN algorithm</h1>
+<h1
+id="predicting-a-binary-outcome-with-the-knn-algorithm-via-carettrain">6.
+Predicting a binary outcome with the KNN algorithm via
+<code>caret:train()</code></h1>
 <p>Please review the following notebook that builds a classification
 model using the K-nearest neighbor algorithm for the full recidivism
 dataset.</p>
