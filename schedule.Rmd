@@ -140,3 +140,10 @@ tbl(tab,d='7-Nov & 14-Nov')
 
 ```
 
+### Week 8: Introduction to K-Nearest Neighbors and Decision Tree Algorithms
+```{r}
+
+tbl(tab,d='21-Nov')
+
+```
+

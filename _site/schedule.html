@@ -2122,8 +2122,8 @@ Lecture Notes
 <a href="lecture-3b.html">Lecture-3b</a>
 <a href="lecture-4.html">Lecture-4</a>
 <a href="lecture-5.html">Lecture-5</a>
-<span class="nav-dropdown-header">Lecture-6a</span>
-<span class="nav-dropdown-header">Lecture-6b</span>
+<a href="lecture-6a.html">Lecture-6a</a>
+<a href="lecture-6b.html">Lecture-6b</a>
 <span class="nav-dropdown-header">Lecture-7a</span>
 <span class="nav-dropdown-header">Lecture-7b</span>
 <span class="nav-dropdown-header">Lecture-8a</span>
@@ -2153,6 +2153,10 @@ Kaggle Notebooks
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/">Building a Classification Model with Ridge Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty">Building a Classification Model with Lasso Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net">Building a Classification Model with Elastic Net</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn">Building a Prediction Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn">Building a Classification Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/uocoeeds/building-a-prediction-model-using-a-decision-tree">Building a Prediction Model with a Decision Tree</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm">Building a Classification Model with a Decision Tree</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2167,6 +2171,7 @@ Slides
 <a href="slides/slide3.html">Week 3 &amp; 4</a>
 <a href="slides/slide4.html">Week 5</a>
 <a href="slides/slide5.html">Week 6 &amp; 7</a>
+<a href="slides/slide6.html">Week 8</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2219,6 +2224,11 @@ Regression</a></li>
 <li><a href="#week-6-7-regularized-logistic-regression"
 id="toc-week-6-7-regularized-logistic-regression">Week 6 &amp; 7:
 (Regularized) Logistic Regression</a></li>
+<li><a
+href="#week-8-introduction-to-k-nearest-neighbors-and-decision-tree-algorithms"
+id="toc-week-8-introduction-to-k-nearest-neighbors-and-decision-tree-algorithms">Week
+8: Introduction to K-Nearest Neighbors and Decision Tree
+Algorithms</a></li>
 </ul>
 </nav>
 </div>
@@ -2517,6 +2527,72 @@ APM, Ch. 12.2 and 12.5</a>
 <td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
 <a href="https://www.kaggle.com/code/uocoeeds/assignment-2" style="     ">Assignment
 2</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3
+id="week-8-introduction-to-k-nearest-neighbors-and-decision-tree-algorithms">Week
+8: Introduction to K-Nearest Neighbors and Decision Tree Algorithms</h3>
+<div class="layout-chunk" data-layout="l-body">
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Date
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Notes
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Kaggle Notebooks
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Slides
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Optional Supplemental Readings
+</th>
+<th style="text-align:left;background-color: #F6FBF4 !important;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+Assignments
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+21-Nov
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://edld654-fall22.netlify.app/lecture-6a.html" style="     ">Lecture-6a</a><br><a href="https://edld654-fall22.netlify.app/lecture-6b.html" style="     ">Lecture-6b</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn" style="     ">Building
+a Prediction Model with K-nearest
+neighbors</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn" style="     ">Building
+a Classification Model with K-nearest
+neighbors</a><br><a href="https://www.kaggle.com/uocoeeds/building-a-prediction-model-using-a-decision-tree" style="     ">Building
+a Prediction Model with a Decision
+Tree</a><br><a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm" style="     ">Building
+a Classification Model with a Decision Tree</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://edld654-fall22.netlify.app/slides/slide6.html" style="     ">Week
+8</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="https://bradleyboehmke.github.io/HOML/knn.html" style="     ">Boehmke
+&amp; Greenwell, Ch.
+8</a><br><a href="https://bradleyboehmke.github.io/HOML/DT.html" style="     ">
+Boehmke &amp; Greenwell, Ch.
+9</a><br><a href="https://edld654-fall22.netlify.app/schedule.html" style="     ">
+APM Ch.
+13.5</a><br><a href="https://edld654-fall22.netlify.app/schedule.html" style="     ">
+James et al. Ch. 8.1</a>
+</td>
+<td style="text-align:left;border-bottom: solid;border-top: solid;border-left: solid;border-right: solid;">
+<a href="" style="     "></a>
 </td>
 </tr>
 </tbody>
