@@ -151,9 +151,12 @@ navbar:
         - text: "Week 6 & 7"
           href: slides/slide5.html
 
-        - text: "Week 8"
-          href: slides/slide6.html          
-    
+        - text: "Week 8_Part 1"
+          href: slides/slide6a.html 
+        
+        - text: "Week 8_Part 2"
+          href: slides/slide6b.html 
+          
     - text: "Assignments"
       menu:
         - text: "Assignment1"

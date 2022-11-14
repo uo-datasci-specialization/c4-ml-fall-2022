@@ -2454,8 +2454,8 @@ Lecture Notes
 <a href="lecture-3b.html">Lecture-3b</a>
 <a href="lecture-4.html">Lecture-4</a>
 <a href="lecture-5.html">Lecture-5</a>
-<span class="nav-dropdown-header">Lecture-6a</span>
-<span class="nav-dropdown-header">Lecture-6b</span>
+<a href="lecture-6a.html">Lecture-6a</a>
+<a href="lecture-6b.html">Lecture-6b</a>
 <span class="nav-dropdown-header">Lecture-7a</span>
 <span class="nav-dropdown-header">Lecture-7b</span>
 <span class="nav-dropdown-header">Lecture-8a</span>
@@ -2485,6 +2485,10 @@ Kaggle Notebooks
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/">Building a Classification Model with Ridge Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty">Building a Classification Model with Lasso Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net">Building a Classification Model with Elastic Net</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn">Building a Prediction Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn">Building a Classification Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/uocoeeds/building-a-prediction-model-using-a-decision-tree">Building a Prediction Model with a Decision Tree</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm">Building a Classification Model with a Decision Tree</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2499,6 +2503,8 @@ Slides
 <a href="slides/slide3.html">Week 3 &amp; 4</a>
 <a href="slides/slide4.html">Week 5</a>
 <a href="slides/slide5.html">Week 6 &amp; 7</a>
+<a href="slides/slide6a.html">Week 8_Part 1</a>
+<a href="slides/slide6b.html">Week 8_Part 2</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2600,7 +2606,7 @@ Predicting a binary outcome with a Decision Tree via
 
 
 </style>
-<p>[Updated: Fri, Nov 11, 2022 - 21:23:23 ]</p>
+<p>[Updated: Sun, Nov 13, 2022 - 19:27:12 ]</p>
 <h1 id="decision-trees">1. Decision Trees</h1>
 <p>We will again consider the toy readability dataset (N=20) we used to
 predict a readability score from Feature 220 and Feature 166</p>
@@ -3193,10 +3199,10 @@ rpart(formula = target ~ V220 + V166, data = readability_sub,
   n= 20 
 
          CP nsplit rel error   xerror      xstd
-1 0.3121563      0 1.0000000 1.104560 0.4959800
-2 0.2363040      1 0.6878437 1.161495 0.4968491
-3 0.1259195      2 0.4515397 1.161495 0.4968491
-4 0.0000000      3 0.3256202 1.222229 0.4481453
+1 0.3121563      0 1.0000000 1.145020 0.5190773
+2 0.2363040      1 0.6878437 1.546951 0.5899322
+3 0.1259195      2 0.4515397 1.480240 0.5000914
+4 0.0000000      3 0.3256202 1.405163 0.4851406
 
 Variable importance
 V220 V166 

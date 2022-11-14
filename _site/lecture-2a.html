@@ -2454,8 +2454,8 @@ Lecture Notes
 <a href="lecture-3b.html">Lecture-3b</a>
 <a href="lecture-4.html">Lecture-4</a>
 <a href="lecture-5.html">Lecture-5</a>
-<span class="nav-dropdown-header">Lecture-6a</span>
-<span class="nav-dropdown-header">Lecture-6b</span>
+<a href="lecture-6a.html">Lecture-6a</a>
+<a href="lecture-6b.html">Lecture-6b</a>
 <span class="nav-dropdown-header">Lecture-7a</span>
 <span class="nav-dropdown-header">Lecture-7b</span>
 <span class="nav-dropdown-header">Lecture-8a</span>
@@ -2485,6 +2485,10 @@ Kaggle Notebooks
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-ridge-penalty/">Building a Classification Model with Ridge Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-lasso-penalty">Building a Classification Model with Lasso Penalty</a>
 <a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-with-elastic-net">Building a Classification Model with Elastic Net</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn">Building a Prediction Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn">Building a Classification Model with K-nearest neighbors</a>
+<a href="https://www.kaggle.com/uocoeeds/building-a-prediction-model-using-a-decision-tree">Building a Prediction Model with a Decision Tree</a>
+<a href="https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm">Building a Classification Model with a Decision Tree</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2499,6 +2503,8 @@ Slides
 <a href="slides/slide3.html">Week 3 &amp; 4</a>
 <a href="slides/slide4.html">Week 5</a>
 <a href="slides/slide5.html">Week 6 &amp; 7</a>
+<a href="slides/slide6a.html">Week 8_Part 1</a>
+<a href="slides/slide6b.html">Week 8_Part 2</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2604,7 +2610,7 @@ id="toc-wrapping-up-using-the-recipes-package">6. Wrapping-up using the
 }
 
 </style>
-<p>[Updated: Sat, Nov 05, 2022 - 02:15:28 ]</p>
+<p>[Updated: Sun, Nov 13, 2022 - 19:24:10 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3253,25 +3259,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2700552 
- - mean (before standardization) = -3.183558 
- - sd (before standardization) = 0.1527294 </code></pre>
+ - lambda = 0.2548933 
+ - mean (before standardization) = -3.307104 
+ - sd (before standardization) = 0.1761559 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.75     3.72
+X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.75      3.7
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew
-X1    1 1000 -3.18 0.15  -3.18   -3.18 0.15 -3.62 -2.76  0.86 -0.03
-   kurtosis se
-X1    -0.27  0</code></pre>
+X1    1 1000 -3.31 0.18  -3.31   -3.31 0.19 -3.85 -2.83  1.02 -0.04
+   kurtosis   se
+X1    -0.35 0.01</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
