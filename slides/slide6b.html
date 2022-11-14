@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Introduction to K-Nearest Neighbors Algorithm</title>
+    <title>Introduction to Decision Tree Algorithm</title>
     <meta charset="utf-8" />
     <meta name="author" content="Cengiz Zopluoglu" />
     <script src="slide6b_files/header-attrs-2.14/header-attrs.js"></script>
     <link href="slide6b_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="slide6b_files/remark-css-0.0.1/uo.css" rel="stylesheet" />
     <link href="slide6b_files/remark-css-0.0.1/ki-fonts.css" rel="stylesheet" />
-    <script src="slide6b_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-    <script src="slide6b_files/plotly-binding-4.10.0/plotly.js"></script>
-    <script src="slide6b_files/typedarray-0.1/typedarray.min.js"></script>
-    <script src="slide6b_files/jquery-3.5.1/jquery.min.js"></script>
-    <link href="slide6b_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-    <script src="slide6b_files/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-    <link href="slide6b_files/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-    <script src="slide6b_files/plotly-main-2.5.1/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="my_custom.css" type="text/css" />
     <link rel="stylesheet" href="xaringanthemer.css" type="text/css" />
   </head>
@@ -24,7 +16,7 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Introduction to K-Nearest Neighbors Algorithm
+# Introduction to Decision Tree Algorithm
 ]
 .author[
 ### Cengiz Zopluoglu
@@ -132,732 +124,623 @@ class: center, middle, inverse, title-slide
 
 ### The goals:
 
-- K-nearest Neighbors Algorithm
+Decision Trees
 
-  - The concept of **distance** between two vectors
+- The basics of a decision tree
     
-  - The concept of K-nearest neighbors
+  - Tree structure
     
-  - Predicting an outcome based on K-nearest neighbors
+  - Predictions from a decision tree
     
-  - Kernels to Weight the neighbors
+  - Loss function
+    
+  - Growing a decision tree model
+    
+  - Pruning a decision tree model
+    
+- The `rpart()` function
+    
+- Review of Kaggle notebooks for building Decision Tree models
   
-  - Review of Kaggle notebooks for building KNN models
-  
 ---
 
-# Distance Between Two Vectors
+# Decision Trees
 
-- Imagine that each observation in a dataset lives in a *P*-dimensional space, where *P* is the number of predictors. 
-
-  - Obsevation 1: `\(\mathbf{A} = (A_1, A_2, A_3, ..., A_P)\)`
-
-  - Obsevation 2: `\(\mathbf{B} = (B_1, B_2, B_3, ..., B_P)\)`
-
-- A general definition of distance between two vectors is the **Minkowski Distance**. 
-
-`$$\left ( \sum_{i=1}^{P}|A_i-B_i|^q \right )^{\frac{1}{q}},$$`
-where `\(q\)` can take any positive value.
-
----
-
-- Suppose that we have two observations and three predictors
-
-  - Observation 1:  (20,25,30)
-
-  - Observation 2:  (80,90,75)
-
-<div id="htmlwidget-dfe3355544336ba4c348" style="width:600px;height:400px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dfe3355544336ba4c348">{"x":{"visdat":{"4a7859652cfa":["function () ","plotlyVisDat"]},"cur_data":"4a7859652cfa","attrs":{"4a7859652cfa":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"width":600,"height":400,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-
----
-
-- If we assume that the `\(q=1\)` for the Minkowski equation above, then we can calculate the distance as the following:
-
-.indent[
-.single[
-.tiny[
-
-```r
-A &lt;- c(20,25,30)
-B &lt;- c(80,90,75)
-
-sum(abs(A - B))
-```
-
-```
-[1] 170
-```
-]]]
-
-- If we assume that the `\(q=2\)` for the Minkowski equation above, then we can calculate the distance as the following:
-
-.indent[
-.single[
-.tiny[
-
-```r
-A &lt;- c(20,25,30)
-B &lt;- c(80,90,75)
-
-(sum(abs(A - B)^2))^(1/2)
-```
-
-```
-[1] 99.25
-```
-]]]
-
-
-- If we assume that the `\(q=3\)` for the Minkowski equation above, then we can calculate the distance as the following:
-
-.indent[
-.single[
-.tiny[
-
-```r
-A &lt;- c(20,25,30)
-B &lt;- c(80,90,75)
-
-(sum(abs(A - B)^3))^(1/2)
-```
-
-```
-[1] 762.7
-```
-]]]
----
-
-When `\(q\)` is equal to 1 for the Minkowski equation, it becomes a special case known as **Manhattan Distance**. 
-
-<div id="htmlwidget-fbfe890ab43d4c9170bb" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fbfe890ab43d4c9170bb">{"x":{"visdat":{"4a7824af46ec":["function () ","plotlyVisDat"]},"cur_data":"4a7824af46ec","attrs":{"4a7824af46ec":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4a7824af46ec.1":{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"4a7824af46ec.2":{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true},"4a7824af46ec.3":{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1.25,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,20],"y":[25,25],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,20],"y":[25,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[20,80],"y":[90,90],"z":[75,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-
----
-
-When `\(q\)` is equal to 2 for the Minkowski equation, it is also a special case known as **Euclidian Distance**.
-
-<div id="htmlwidget-51bf89fd5f265aaf98e7" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-51bf89fd5f265aaf98e7">{"x":{"visdat":{"4a7838a566fd":["function () ","plotlyVisDat"]},"cur_data":"4a7838a566fd","attrs":{"4a7838a566fd":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4a7838a566fd.1":{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.25,"y":1,"z":0}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[20,80],"y":[25,90],"z":[30,75],"mode":"lines","type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-
----
-
-# K-Nearest Neighbors
-
-- When there are `\(N\)` observations in a dataset, a distance between any observation and `\(N-1\)` remaining observations can be computed using Minkowski distance (with a user-defined choice of `\(q\)` value, a hyperparameter). 
-
-- Then, for any given observation, we can rank order the remaining observations based on how close they are to the given observation and then decide the K observations closest based on their distance.
-
-- Suppose that there are ten observations measured on three predictor variables (X1, X2, and X3) with the following values. 
-
-.indent[
-.single[
-.tiny[
-
-```r
-d &lt;- data.frame(x1 =c(20,25,30,42,10,60,65,55,80,90),
-                x2 =c(10,15,12,20,45,75,70,80,85,90),
-                x3 =c(25,30,35,20,40,80,85,90,92,95),
-                label= c('A','B','C','D','E','F','G','H','I','J'))
-
-d
-```
-
-```
-   x1 x2 x3 label
-1  20 10 25     A
-2  25 15 30     B
-3  30 12 35     C
-4  42 20 20     D
-5  10 45 40     E
-6  60 75 80     F
-7  65 70 85     G
-8  55 80 90     H
-9  80 85 92     I
-10 90 90 95     J
-```
-]]]
-
----
-
-<div id="htmlwidget-03c888a624e1a33a226f" style="width:800px;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-03c888a624e1a33a226f">{"x":{"visdat":{"4a7856a36f2f":["function () ","plotlyVisDat"]},"cur_data":"4a7856a36f2f","attrs":{"4a7856a36f2f":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"},"4a7856a36f2f.1":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","marker":{"color":"orange"},"inherit":true},"4a7856a36f2f.2":{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["A","B","C","D","E"],"inherit":true},"4a7856a36f2f.3":{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","text":["F","G","H","I","J"],"inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"range":[0,100],"title":"X1"},"yaxis":{"range":[0,100],"title":"X2"},"zaxis":{"range":[0,100],"title":"X3"},"camera":{"eye":{"x":1.5,"y":1,"z":1}}},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"markers","type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"markers","type":"scatter3d","marker":{"color":"orange","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[20,25,30,42,10],"y":[10,15,12,20,45],"z":[25,30,35,20,40],"mode":"text","type":"scatter3d","text":["A","B","C","D","E"],"marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[60,65,55,80,90],"y":[75,70,80,85,90],"z":[80,85,90,92,95],"mode":"text","type":"scatter3d","text":["F","G","H","I","J"],"marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"line":{"color":"rgba(214,39,40,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-
----
-
-Given that there are ten observations, we can calculate the distance between all 45 pairs of observations (e.g., Euclidian distance). 
-
-.pull-left[
-.indent[
-.single[
-.tiny2[
-
-```r
-labels &lt;- c('A','B','C','D','E',
-            'F','G','H','I','J')
-
-dist &lt;- as.data.frame(t(combn(labels,2)))
-dist$euclidian &lt;- NA
-
-for(i in 1:nrow(dist)){
-  
-  a &lt;- d[d$label==dist[i,1],1:3]
-  b &lt;- d[d$label==dist[i,2],1:3]
-  dist[i,]$euclidian &lt;- sqrt(sum((a-b)^2))
-  
-}
-
-dist
-```
-]]]]
-
-
-.pull-right[
-.indent[
-.single[
-.tiny2[
-
-```
-   V1 V2 euclidian
-1   A  B     8.660
-2   A  C    14.283
-3   A  D    24.678
-4   A  E    39.370
-5   A  F    94.074
-6   A  G    96.047
-7   A  H   101.735
-8   A  I   117.107
-9   A  J   127.279
-10  B  C     7.681
-11  B  D    20.347
-12  B  E    35.000
-13  B  F    85.586
-14  B  G    87.464
-15  B  H    93.408
-16  B  I   108.485
-17  B  J   118.638
-18  C  D    20.809
-19  C  E    38.910
-20  C  F    83.030
-21  C  G    84.196
-22  C  H    90.962
-23  C  I   105.252
-24  C  J   115.256
-25  D  E    45.266
-26  D  F    83.361
-27  D  G    85.170
-28  D  H    93.107
-29  D  I   104.178
-30  D  J   113.265
-31  E  F    70.711
-32  E  G    75.333
-33  E  H    75.829
- [ reached 'max' / getOption("max.print") -- omitted 12 rows ]
-```
-]]]]
----
-
-For instance, we can find the three closest observations to **Point E** (3-Nearest Neighbors). As seen below, the 3-Nearest Neighbors for **Point E** in this dataset would be **Point B**, **Point C**, and **Point A**.
-
-.single[
-.tiny2[
-
-```r
-# Point E is the fifth observation in the dataset
-
-loc &lt;- which(dist[,1]=='E' | dist[,2]=='E')
-
-tmp &lt;- dist[loc,]
-
-tmp[order(tmp$euclidian),]
-```
-
-```
-   V1 V2 euclidian
-12  B  E     35.00
-19  C  E     38.91
-4   A  E     39.37
-25  D  E     45.27
-31  E  F     70.71
-32  E  G     75.33
-33  E  H     75.83
-34  E  I     95.94
-35  E  J    107.00
-```
-]]
-
----
-
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-***
-&lt;div id="infobox"&gt;
-
-&lt;center style="color:black;"&gt; &lt;b&gt;NOTE 1&lt;/b&gt; &lt;/center&gt;
-
-The `\(q\)` in the Minkowski distance equation and `\(K\)` in the K-nearest neighbor are user-defined hyperparameters in the KNN algorithm. As a researcher and model builder, you can pick any values for `\(q\)` and `\(K\)`. They can be tuned using a similar approach applied in earlier classes for regularized regression models. One can pick a set of values for these hyperparameters and apply a grid search to find the combination that provides the best predictive performance.
-
-It is typical to observe overfitting (high model variance, low model bias) for small values of K and underfitting (low model variance, high model bias) for large values of K. In general, people tend to focus their grid search for K around `\(\sqrt{N}\)`.
-
-&lt;/div&gt;
-***
-
----
-
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-
-***
-&lt;div id="infobox"&gt;
-
-&lt;center style="color:black;"&gt; &lt;b&gt;NOTE 2&lt;/b&gt; &lt;/center&gt;
-
-It is essential to remember that the distance calculation between two observations is highly dependent on the scale of measurement for the predictor variables. If predictors are on different scales, the distance metric formula will favor the differences in predictors with larger scales, and it is not ideal. Therefore, it is essential to center and scale all predictors before the KNN algorithm so each predictor similarly contributes to the distance metric calculation.
-
-&lt;/div&gt;
-***
-
----
-
-# Prediction with K-Nearest Neighbors
-
-Below is a list of steps for predicting an outcome for a given observation.
-
-  - 1. Calculate the distance between the observation and the remaining `\(N-1\)` observations in the data (with a user choice of `\(q\)` in Minkowski distance).
-
-  - 2. Rank order the observations based on the calculated distance, and choose the K-nearest neighbor. (with a user choice of `\(K\)`)
-
-  - 3. Calculate the mean of the observed outcome in the K-nearest neighbors as your prediction.
-
-Note that Step 3 applies regardless of the type of outcome. 
-
-If the outcome variable is continuous, we calculate the average outcome for the K-nearest neighbors as our prediction. 
-
-If the outcome variable is binary (e.g., 0 vs. 1), then the proportion of observing each class among the K-nearest neighbors yields predicted probabilities for each class.
-
----
-
-### An example of predicting a continuous outcome with the KNN algorithm
-
-1. Import the data
-
-2. Write a recipe for processing variables
-
-3. Apply the recipe to the dataset
-
-
-.indent[
-.single[
-.tiny2[
-
-
-```r
-# Import the dataset
-
-readability &lt;- read.csv('./data/readability_features.csv',header=TRUE)
-
-# Write the recipe
-
-require(recipes)
-
-blueprint_readability &lt;- recipe(x     = readability,
-                                vars  = colnames(readability),
-                                roles = c(rep('predictor',768),'outcome')) %&gt;%
-  step_zv(all_numeric()) %&gt;%
-  step_nzv(all_numeric()) %&gt;%
-  step_normalize(all_numeric_predictors()) 
-
-# Apply the recipe
-
-baked_read &lt;- blueprint_readability %&gt;% 
-  prep(training = readability) %&gt;%
-  bake(new_data = readability)
-```
-]]]
-
-
-Our final dataset (`baked_read`) has 2834 observations and 769 columns (768 predictors; the last column is target outcome). 
-
-Suppose we would like to predict the readability score for the first observation. 
-
----
-
-The code below will calculate the Minkowski distance (with `\(q=2\)`) between the first observation and each of the remaining 2833 observations by using the first 768 columns of the dataset (predictors).
+- In this lecture, we will again consider the toy readability dataset (N=20) 
+- We used to predict a readability score from two predictors: Feature 220 and Feature 166 
 
 .indent[
 .single[
 .tiny2[
 
 ```r
-dist &lt;- data.frame(obs = 2:2834,dist = NA,target=NA)
+readability_sub &lt;- read.csv(here('data/readability_sub.csv'),
+                            header=TRUE)
 
-for(i in 1:2833){
-  
-  a &lt;- as.matrix(baked_read[1,1:768])
-  b &lt;- as.matrix(baked_read[i+1,1:768])
-  dist[i,]$dist   &lt;- sqrt(sum((a-b)^2))
-  dist[i,]$target &lt;- baked_read[i+1,]$target
+readability_sub[,c('V220','V166','target')]
+```
 
-  #print(i)
-}
+```
+       V220     V166   target
+1  -0.13908  0.19028 -2.06282
+2   0.21764  0.07101  0.58259
+3   0.05812  0.03993 -1.65313
+4   0.02526  0.18846 -0.87391
+5   0.22431  0.06201 -1.74049
+6  -0.07795  0.10754 -3.63994
+7   0.43401  0.12202 -0.62284
+8  -0.24365  0.02455 -0.34427
+9   0.15894  0.10422 -1.12299
+10  0.14496  0.02340 -0.99857
+11  0.34223  0.22065 -0.87657
+12  0.25219  0.10865 -0.03305
+13  0.03533  0.07549 -0.49530
+14  0.36411  0.18676  0.12454
+15  0.29989  0.11618  0.09678
+16  0.19837  0.08273  0.38422
+17  0.07807  0.10235 -0.58143
+18  0.07936  0.11619 -0.34325
+19  0.57001 -0.02385 -0.39054
+20  0.34523  0.09300 -0.67548
 ```
 ]]]
 
 ---
 
+# Basics of a decision tree
+
+### Tree Structure
+
+Let's imagine a simple tree model to predict readability scores from Feature 220.
 
 
-We now rank-order the observations from closest to the most distant and then choose the 20 nearest observations (K=20). 
+![](dt1.PNG)
 
-.single[
-.tiny[
+This model splits the sample into two pieces using a **split point** of 0.2 for the predictor variable (Feature 220). 
 
-```r
-# Rank order the observations from closest to the most distant
-
-dist &lt;- dist[order(dist$dist),]
-
-# Check the 20-nearest neighbors
-
-print(dist[1:20,], row.names = FALSE)
-```
-
-```
-  obs  dist  target
- 2441 24.18  0.5590
-   45 24.37 -0.5864
- 1992 24.91  0.1430
- 2264 25.26 -0.9035
- 2522 25.27 -0.6359
- 2419 25.41 -0.2128
- 1530 25.66 -1.8725
-  239 25.93 -0.5611
-  238 26.30 -0.8890
- 1520 26.40 -0.6159
- 2244 26.50 -0.3327
- 1554 26.57 -1.8844
- 1571 26.61 -1.1337
- 2154 26.62 -1.1141
-   76 26.64 -0.6056
- 2349 26.68 -0.1593
- 1189 26.85 -1.2395
- 2313 26.95 -0.2532
- 2179 27.05 -1.0299
- 2017 27.06  0.1399
-```
-]]
-
+There are 11 observations with Feature 220 less than 0.2 and nine with Feature 220 larger than 0.2. The top of the tree model is called **root node**, and the `\(R_1\)` and `\(R_2\)` in this model are called **terminal nodes**.
 ---
 
-Finally, we can calculate the average of the observed outcome for the 20 nearest neighbors, which will become our prediction of the readability score for the first observation.
+![](dt1.PNG)
 
-.tiny[
+- This model has two terminal nodes. 
 
-```r
-mean(dist[1:20,]$target)
-```
+- There is a number assigned to each terminal node. These numbers are the average values for the target outcome (readability score) for those observations in that specific node. It can be symbolically shown as
 
-```
-[1] -0.6594
-```
+`$$\bar{Y_t} = \frac{1}{n_t}\sum_{i\epsilon R_t} Y_i,$$`
+
+.indent[
+where `\(n_t\)` is the number of observations in a terminal node, and `\(R_t\)` represents the set of observations in the `\(t_{th}\)` node.
 ]
 
-The observed outcome (readability score) for the first observation.
+---
 
+![](dt1.PNG)
+
+- There is also a concept of **depth** of a tree. 
+
+- The root node is counted as depth 0, and each split increases the depth of the tree by one. In this case, we can say that this tree model has a depth of one.
+
+---
+
+We can increase the complexity of our tree model by splitting the first node into two more nodes using a split point of 0. 
+
+![](dt2.PNG)
+
+Now, our model has a **depth of two** and a total of **three terminal nodes**. 
+
+Each terminal node is assigned a score by computing the average outcome for those observations in that node. 
+
+---
+
+The tree model can have nodes from splitting another variable. 
+
+For instance, the model below first splits the observations based on Feature 220, then based on Feature 166, yielding a tree model again with **three nodes** with a **depth of two**. 
+
+This tree model's complexity is the same as the previous one's; the only difference is that we have nodes from two predictors instead of one.
+
+&lt;br&gt;
+
+![](dt3.PNG)
+
+---
+
+A final example is another tree model with increasing complexity and having a depth of three and four nodes. 
+
+It first splits observations based on whether or not Feature 220 is less than 0.2, then splits observations based on whether or not Feature 220 is less than 0, and finally splits observations based on whether or not Feature 166 is less than 0.1.
+
+![](dt4.PNG)
+---
+
+### Predictions
+
+Suppose you developed a tree model and decided to use this model to make predictions for new observations. 
+
+Let's assume our model is the below. 
+
+![](dt4.PNG)
+
+---
+
+How do we use this model to make predictions for new observations?
+
+Suppose that there is a new reading passage:
+
+  - The value for Feature 220 is - 0.5
+  
+  - The value for Feature 166 is 0. 
+
+What is the predicted readability score for this passage based on this tree model?
+
+You can trace a path starting from the **root node** (top of the tree) and see where this reading passage will end. 
+
+&lt;center&gt; ![](dt5.PNG)
+
+---
+
+Suppose you have another new reading passage: 
+
+  - The value for Feature 220 is 0.1
+  
+  - The value for Feature 166 is 0. 
+  
+What is the predicted readability score for this passage based on this tree model?
+
+&lt;center&gt; ![](dt6.PNG)
+
+---
+
+### Loss function
+
+When we fit a tree model, the algorithm decides the best split that minimizes the sum of squared errors. The sum of squared error from a tree model can be shown as 
+
+`$$SSE = \sum_{t=1}^{T} \sum_{i \epsilon R_t} (Y_i - \hat{Y}_{R_{t}})^2$$`
+
+where `\(T\)` is the total number of terminal nodes in the tree model, and `\(\hat{Y}_{R_{t}}\)` is the prediction for the observations in the `\(t^{th}\)` node (average target outcome for those observations in the `\(t^{th}\)` node).
+
+---
+
+### Growing a tree
+
+Deciding on a root node and then growing a tree model from that root node can become computationally exhaustive depending on the size of the dataset and the number of variables. 
+
+The decision tree algorithm 
+
+  - searches all variables designated as predictors in the dataset at all possible split points for these variables, 
+  
+  - calculates the SSE for all possible splits, 
+  
+  - and then finds the split that would reduce the prediction error the most. 
+  
+The search continues by growing the tree model sequentially until there is no more split left that would give better predictions.
+
+---
+
+Let's demonstrate the logic of this search process with the toy dataset (N=20) and two predictor variables: Feature 220 and Feature 166. 
+
+Before we start our search process, we should come up with a baseline SSE to decide whether any future split will improve our predictions. 
+
+We can imagine that a model with no split and using the mean of all 20 observations to predict the target outcome is the simplest baseline model. 
+
+SSE from this baseline model is equal to 17.73
+
+.single[
 .tiny[
 
 ```r
-readability[1,]$target
+# average outcome
+
+mu &lt;- mean(readability_sub$target)
+
+# SSE for baseline model
+
+sum((readability_sub$target - mu)^2)
 ```
 
 ```
-[1] -0.3403
-```
-]
----
-
-### An example of predicting a binary outcome with the KNN algorithm
-
-- We can follow the same procedures to predict Recidivism in the second year after an individual's initial release from prison. 
-
-- The final dataset (`baked_recidivism`) after pre-processing has 18111 observations and 142 predictors.
-
-- Suppose that we would like to predict the probability of Recidivism for the first individual. 
-
-- The code below will calculate the Minkowski distance (with `\(q=2\)`) between the first individual and each of the remaining 18,110 individuals by using values of the 142 predictors in this dataset.
-
-.indent[
-.single[
-.tiny2[
-
-```r
-dist2 &lt;- data.frame(obs = 2:18111,dist = NA,target=NA)
-
-for(i in 1:18110){
-  
-  a &lt;- as.matrix(baked_recidivism[1,3:144])
-  b &lt;- as.matrix(baked_recidivism[i+1,3:144])
-  dist2[i,]$dist   &lt;- sqrt(sum((a-b)^2))
-  dist2[i,]$target &lt;- as.character(baked_recidivism[i+1,]$Recidivism_Arrest_Year2)
-
-  #print(i)
-}
-```
-]]]
-
----
-
-
-
-Suppose we now rank-order the individuals from closest to the most distant and then choose the 20-nearest observations. 
-
-Then, we calculate proportion of individuals who were recidivated (YES) and not recidivated (NO) among these 20-nearest neighbors. 
-
-.pull-left[
-.single[
-.tiny2[
-
-```r
-dist2 &lt;- dist2[order(dist2$dist),]
-
-print(dist2[1:20,],
-      row.names = FALSE)
-```
-
-```
-   obs  dist target
-  7070 6.217     No
- 14204 6.256     No
-  1574 6.384     No
-  4527 6.680     No
-  8446 7.012     No
-  6024 7.251     No
-  7787 7.270     No
-   565 7.279    Yes
-  8768 7.288     No
-  4646 7.359     No
-  4043 7.376     No
-  9113 7.385     No
-  5316 7.405     No
-  4095 7.536     No
-  9732 7.566     No
-   831 7.634     No
- 14385 7.644     No
-  2933 7.660    Yes
-   647 7.676    Yes
-  6385 7.685    Yes
-```
-]]]
-
-.pull-right[
-.single[
-.tiny2[
-
-```r
-table(dist2[1:20,]$target)
-```
-
-```
-
- No Yes 
- 16   4 
-```
-
-```r
-# The observed outcome for the first individual
-
-recidivism[1,]$Recidivism_Arrest_Year2
-```
-
-```
-[1] 0
-```
-]]]
-
-These proportions predict the probability of being recidivated or not recidivated for the first individual.
-
-The probability of the first observation to be recidivated within 2 years is 0.2 (4/20) based on 20 nearest neighbors.
-
----
-
-# Kernels to Weight the Neighbors
-
-- In the previous section, we used a simple average of the observed outcome from K-nearest neighbors. 
-
-- A simple average implies equally weighing each neighbor. 
-
-- Another way of averaging the target outcome from K-nearest neighbors would be to weigh each neighbor according to its distance and calculate a weighted average. 
-
-- A simple way to weigh each neighbor is to use the inverse of the distance. 
-- For instance, consider the earlier example where we find the 20-nearest neighbor for the first observation in the readability dataset.
-
-- We can assign a weight to each neighbor by taking the inverse of their distance and rescaling them such that the sum of the weights equals 1.
-
----
-
-.pull-left[
-.single[
-.tiny2[
-
-```r
-dist &lt;- dist[order(dist$dist),]
-
-k_neighbors &lt;- dist[1:20,]
-
-print(k_neighbors,row.names=FALSE)
-```
-
-```
-  obs  dist  target
- 2441 24.18  0.5590
-   45 24.37 -0.5864
- 1992 24.91  0.1430
- 2264 25.26 -0.9035
- 2522 25.27 -0.6359
- 2419 25.41 -0.2128
- 1530 25.66 -1.8725
-  239 25.93 -0.5611
-  238 26.30 -0.8890
- 1520 26.40 -0.6159
- 2244 26.50 -0.3327
- 1554 26.57 -1.8844
- 1571 26.61 -1.1337
- 2154 26.62 -1.1141
-   76 26.64 -0.6056
- 2349 26.68 -0.1593
- 1189 26.85 -1.2395
- 2313 26.95 -0.2532
- 2179 27.05 -1.0299
- 2017 27.06  0.1399
-```
-]]]
-
-
-.pull-right[
-.single[
-.tiny2[
-
-```r
-k_neighbors$weight &lt;- 1/k_neighbors$dist
-k_neighbors$weight &lt;- k_neighbors$weight/sum(k_neighbors$weight)
-
-print(k_neighbors,row.names=FALSE)
-```
-
-```
-  obs  dist  target  weight
- 2441 24.18  0.5590 0.05382
-   45 24.37 -0.5864 0.05341
- 1992 24.91  0.1430 0.05225
- 2264 25.26 -0.9035 0.05152
- 2522 25.27 -0.6359 0.05151
- 2419 25.41 -0.2128 0.05122
- 1530 25.66 -1.8725 0.05072
-  239 25.93 -0.5611 0.05020
-  238 26.30 -0.8890 0.04949
- 1520 26.40 -0.6159 0.04930
- 2244 26.50 -0.3327 0.04911
- 1554 26.57 -1.8844 0.04899
- 1571 26.61 -1.1337 0.04892
- 2154 26.62 -1.1141 0.04890
-   76 26.64 -0.6056 0.04886
- 2349 26.68 -0.1593 0.04878
- 1189 26.85 -1.2395 0.04847
- 2313 26.95 -0.2532 0.04829
- 2179 27.05 -1.0299 0.04812
- 2017 27.06  0.1399 0.04810
-```
-]]]
-
-
-Compute a weighted average of the target scores instead of a simple average.
-
-.single[
-.tiny2[
-
-```r
-sum(k_neighbors$target*k_neighbors$weight)
-```
-
-```
-[1] -0.6526
+[1] 17.73
 ```
 ]]
 
 ---
 
-Several kernel functions can be used to assign weight to K-nearest neighbors
+#### **Find the root node**
 
-- Epanechnikov
+The first step in building the tree model is to find the root node. 
 
-- Rectangular
+In this case, we have two candidates for the root node: Feature 220 and Feature 166. 
 
-- Quartic
+We want to know which predictor should be the root node and what value we should use to split to improve the baseline SSE the most. 
 
-- Triweight
+The following is what the process would look like:
 
-- Tricube
+1. Pick a split point
 
-- Gaussian
+2. Divide 20 observations into two nodes based on the split point
 
-- Cosine
+3. Calculate the average target outcome within each node as predictions for the observations in that node
 
-For all of them, closest neighbors are assigned higher weights while the weight gets smaller as the distance increases, and they slightly differ the way they assign the weight. 
+4. Calculate SSE within each node using the predictions from Step 3, and sum them all across two nodes. 
 
----
+5. Repeat Steps 1 - 4 for every possible split point, and find the best split point with the minimum SSE
 
-Below is a demonstration of how assigned weight changes as a function of distance for different kernel functions.
-
-&lt;img src="slide6b_files/figure-html/unnamed-chunk-25-1.svg" style="display: block; margin: auto;" /&gt;
+6. Repeat Steps 1 - 5 for every possible predictor.
 
 ---
 
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
+The search process indicates that the best split point for Feature 220 is -0.026. 
+
+If we divide the observations into two nodes based on Feature 220 using the split point -0.026, SSE would be equal to 12.20, a significant improvement over the baseline model.
+
 &lt;br&gt;
 
-***
-&lt;div id="infobox"&gt;
-
-&lt;center style="color:black;"&gt; &lt;b&gt; NOTE 3 &lt;/b&gt; &lt;/center&gt;
-
-Which kernel function should we use for weighing the distance? The type of kernel function can also be considered a hyperparameter to tune.
-
-&lt;/div&gt;
-***
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 
-#### Hyperparameters for the KNN algorithm
+We can (Steps 1-4) repeat the same process for Feature 166. 
+
+The search process indicates that the best split point for Feature 166 is 0.19. 
+
+If we divide the observations into two nodes based on Feature 166 using the split point 0.19, SSE would be equal to 16.62, also an improvement over the baseline model.
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+We have two choices for the **root node** (because we have two predictors in this demonstration):
+
+- Feature 220, Best split point = -0.026, SSE = 12.20
+
+- Feature 166, Best split point = 0.189, SSE = 16.62
+
+Both options improve our predictions over the baseline (SSE = 17.73), but one is better. Therefore, our final decision to start growing our tree is to pick Feature 220 as our **root node** and split it at -0.07. 
+
+**Our tree model starts growing!**
+
+&lt;center&gt; ![](dt7.PNG)
+
+---
+
+Now, we have to decide if we should add another split to either one of these two nodes. There are now four possible split scenarios. 
+
+1. For the first terminal node on the left, we can split the observations based on Feature 220.
+
+2. For the first terminal node on the left, we can split the observations based on Feature 166.
+
+3. For the second terminal node on the right, we can split the observations based on Feature 220.
+
+4. For the second terminal node on the right, we can split the observations based on Feature 166.
+
+For each of these scenarios, we can implement Step 1 - Step 4, identifying the best split point and what SSE that split yields. The code below implements these steps for all four scenarios.
+
+---
+
+**Scenario 1: Split the first terminal node based on Feature 220**
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+**Scenario 2: Split the first terminal node based on Feature 166**
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+**Scenario 3: Split the second terminal node based on Feature 220**
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+**Scenario 4: Split the second terminal node based on Feature 166**
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+Based on our search, the following splits provided the least SSEs:
+
+1. 1st terminal node, Split variable: Feature220, Split Point: -0.19, SSE = 8.01
+
+2. 1st terminal node, Split variable: Feature166, Split Point: 0.066, SSE = 8.01
+
+3. 2nd terminal node, Split variable: Feature220, Split Point: 0.178, SSE = 10.94
+
+4. 2nd terminal node, Split variable: Feature166, Split Point: 0.067, SSE = 9.96
+
+We can decide to continue with either Scenario 1 or 2 because they yield the minimum SSE. Assuming we decide Scenario 1, our tree model now looks like this.
+
+&lt;center&gt; ![](dt8.PNG)
+
+---
+
+
+#### **Termination of Growth**
+
+The search process continues until a specific criterion is met to stop the algorithm. 
+
+There may be several conditions where we may constrain the growth and force the algorithm to stop searching for additional growth in the tree model. 
+
+Some of these are listed below:
+
+- **Minimizing SSE**: the algorithm stops when there is no potential split in any of the existing nodes that would reduce the sum of squared errors.
+
+- ***The minimum number of observations to split**: the algorithm does not attempt to split a node unless there is a certain number of observations in the node. 
+
+- **Maximum depth**: The algorithm stops searching when the tree reaches a certain depth.
+
+---
+
+### Pruning a tree
+
+- Overfitting and underfitting also occur as one develops a tree model. 
+
+- When the depth of a tree becomes unnecessarily large, there is a risk of overfitting (increased variance in model predictions across samples, less generalizable). 
+
+- When the depth of a tree is small, there is a risk of underfitting (increased bias in model predictions, underperforming model).
+
+- To balance the model variance and model bias,  we can add a penalty term to the loss function:
+
+`$$SSE = \sum_{t=1}^{T} \sum_{i \epsilon R_t} (Y_i - \hat{Y}_{R_{t}})^2 + \alpha T$$`
+
+- The penalty term `\(\alpha\)` is known as the **cost complexity** parameter. 
+
+- The product term `\(\alpha T\)` increases as the number of terminal nodes increases in the model, so this term penalizes the increasing complexity of the tree model. 
+
+- By fine-tuning the value of `\(\alpha\)` through cross-validation, we can find a balance between model variance and bias, as we did for regression models. 
+
+- The process is called pruning because the terminal nodes from the tree are eliminated in a nested way for increasing levels of `\(\alpha\)`.
+
+---
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+
+## Growing trees with the `rpart()` function
+---
+
+Let's first replicate our manual search in previous slides to build a tree model predicting the readability scores from Feature 220 and Feature 166 in the toy dataset.
+
+.single[
+.tiny2[
+
+```r
+require(rpart)
+require(rattle)
+
+
+dt &lt;- rpart(formula = target ~ V220 + V166,
+            data    = readability_sub,
+            method  = "anova",
+            control = list(minsplit  = 1,
+                           cp        = 0,
+                           minbucket = 1,
+                           maxdepth  = 2)
+            )
+```
+]]
+
+- The `formula` argument works similarly as in the regression models.
+
+- The `data` argument provides the name of the datasetat the outcome is a continuous variable and this is a regression problem.
+
+- The `control` argument is a list object with several settings to be used during tree-building. 
+
+  - `minsplit=1` forces algorithm not to attempt to split a node unless there is at least one observation. 
+
+  - `minbucket=1` forces algorithm to have at least one observation for any node. 
+
+  - `maxdepth = 2` forces algorithm to stop when the depth of a tree reaches to 2.
+
+  - `cp=0` indicates that we do not want to apply any penalty term ( `\(\lambda = 0\)` ) during the model building process.
+
+---
+
+.single[
+.tiny2[
+
+]]
+
+.single[
+.tiny2[
+
+```r
+  # ?prp
+  # check for a lot of settings for modifying this plot
+
+fancyRpartPlot(dt,type=2,sub='')
+```
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-11-1.svg" style="display: block; margin: auto;" /&gt;
+]]
+
+---
+
+You can also ask for more specific information about the model-building process by running the `summary()` function.
+
+.single[
+.tiny2[
+
+```r
+summary(dt)
+```
+
+```
+Call:
+rpart(formula = target ~ V220 + V166, data = readability_sub, 
+    method = "anova", control = list(minsplit = 1, cp = 0, minbucket = 1, 
+        maxdepth = 2))
+  n= 20 
+
+      CP nsplit rel error xerror   xstd
+1 0.3122      0    1.0000  1.079 0.4959
+2 0.2363      1    0.6878  1.518 0.5707
+3 0.1259      2    0.4515  1.518 0.5707
+4 0.0000      3    0.3256  1.402 0.4620
+
+Variable importance
+V220 V166 
+  81   19 
+
+Node number 1: 20 observations,    complexity param=0.3122
+  mean=-0.7633, MSE=0.8867 
+  left son=2 (3 obs) right son=3 (17 obs)
+  Primary splits:
+      V220 &lt; -0.02634 to the left,  improve=0.31220, (0 missing)
+      V166 &lt; 0.1894   to the right, improve=0.06253, (0 missing)
+
+Node number 2: 3 observations,    complexity param=0.2363
+  mean=-2.016, MSE=1.811 
+  left son=4 (2 obs) right son=5 (1 obs)
+  Primary splits:
+      V220 &lt; -0.1914  to the right, improve=0.7711, (0 missing)
+      V166 &lt; 0.06604  to the right, improve=0.7711, (0 missing)
+
+Node number 3: 17 observations,    complexity param=0.1259
+  mean=-0.5423, MSE=0.3979 
+  left son=6 (4 obs) right son=7 (13 obs)
+  Primary splits:
+      V166 &lt; 0.06651  to the left,  improve=0.3301, (0 missing)
+      V220 &lt; 0.1787   to the left,  improve=0.1854, (0 missing)
+
+Node number 4: 2 observations
+  mean=-2.851, MSE=0.6218 
+
+Node number 5: 1 observations
+  mean=-0.3443, MSE=0 
+
+Node number 6: 4 observations
+  mean=-1.196, MSE=0.2983 
+
+Node number 7: 13 observations
+  mean=-0.3413, MSE=0.2567 
+```
+]]
+
+---
+
+###  Tree pruning by increasing the complexity parameter
+
+- We will now expand the model by adding more predictors to be considered for the tree model. 
+
+- Suppose that we now have six different predictors to be considered for the tree model. 
+
+- We will provide the same settings with six predictors except for the complexity parameter. 
+
+- We will fit three models by setting the complexity parameter at 0, 0.05, and 0.1 to see what happens to the tree model as we increase the complexity parameter.
+
+---
+
+.single[
+.tiny2[
 
 
 ```r
-require(caret)
-require(kknn)
+dt &lt;- rpart(formula = target ~ V78 + V166 + V220 + V375 + V562 + V568,
+            data    = readability_sub,
+            method  = "anova",
+            control = list(minsplit=1,
+                           cp=0,
+                           minbucket = 1,
+                           maxdepth = 5)
+            )
 
-getModelInfo()$kknn$parameters
+
+fancyRpartPlot(dt,type=2,sub='')
 ```
 
-```
-  parameter     class           label
-1      kmax   numeric Max. #Neighbors
-2  distance   numeric        Distance
-3    kernel character          Kernel
-```
-  
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-13-1.svg" style="display: block; margin: auto;" /&gt;
+]]
 ---
 
-#### Review the Kaggle Notebooks
+.single[
+.tiny2[
 
-- [Building a Prediction Model for a Continuous Outcome Using the KNN Algorithm](https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-knn)
+```r
+dt &lt;- rpart(formula = target ~ V78 + V166 + V220 + V375 + V562 + V568,
+            data    = readability_sub,
+            method  = "anova",
+            control = list(minsplit=1,
+                           cp=0.05,
+                           minbucket = 1,
+                           maxdepth = 5)
+            )
 
-- [Building a Classification Model for a Binary Outcome Using the KNN Algorithm](https://www.kaggle.com/code/uocoeeds/building-a-classification-model-using-knn)
+
+fancyRpartPlot(dt,type=2,sub='')
+```
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-14-1.svg" style="display: block; margin: auto;" /&gt;
+]]
+
+---
+
+.single[
+.tiny2[
+
+
+```r
+dt &lt;- rpart(formula = target ~ V78 + V166 + V220 + V375 + V562 + V568,
+            data    = readability_sub,
+            method  = "anova",
+            control = list(minsplit=1,
+                           cp=0.1,
+                           minbucket = 1,
+                           maxdepth = 5)
+            )
+
+
+fancyRpartPlot(dt,type=2,sub='')
+```
+
+&lt;img src="slide6b_files/figure-html/unnamed-chunk-15-1.svg" style="display: block; margin: auto;" /&gt;
+
+]]
+
+---
+
+#### **Kaggle Notebook**
+
+- [Building a Prediction Model using a Decision Tree](https://www.kaggle.com/code/uocoeeds/building-a-prediction-model-using-a-decision-tree)
+
+** Performance Comparison of Different Algorithms**
+
+|                   | R-square | MAE   | RMSE
+|-------------------|:--------:|:-----:|:-----:|
+| Linear Regression |  0.658   | 0.499 | 0.620 |
+| Ridge Regression  |  0.727   | 0.432 | 0.536 |
+| Lasso Regression  |  0.721   | 0.433 | 0.542 |
+| Elastic Net       |  0.726   | 0.433 | 0.539 |
+| KNN               |  0.611   | 0.519 | 0.648 |
+| Decision Tree     |  0.499   | 0.574 | 0.724 |
+
+---
+
+#### **Kaggle Notebook**
+
+- [Building a Classification Model using a Decision Tree](https://www.kaggle.com/code/uocoeeds/building-a-classification-tree-algorithm)
+
+** Performance Comparison of Different Algorithms**
+
+|                                         | -LL | AUC | ACC | TPR | TNR | FPR |PRE  |
+|-----------------------------------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Logistic Regression                     |0.510|0.719|0.755|0.142|0.949|0.051|0.471|
+| Logistic Regression with Ridge Penalty  |0.511|0.718|0.754|0.123|0.954|0.046|0.461|
+| Logistic Regression with Lasso Penalty  |0.509|0.720|0.754|0.127|0.952|0.048|0.458|
+| Logistic Regression with Elastic Net    |0.509|0.720|0.753|0.127|0.952|0.048|0.456|
+| KNN                                     |  ?  |    ?|   ? | ?   |  ?  |  ?  |  ?  |
+| Decision Tree                           |0.558|0.603|0.757|0.031|0.986|0.014|0.423|
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
