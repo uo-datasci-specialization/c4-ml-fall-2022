@@ -147,3 +147,10 @@ tbl(tab,d='21-Nov')
 
 ```
 
+### Week 9: Introduction to Bagged Trees, Random Forests, and Gradient Boosting Trees
+```{r}
+
+tbl(tab,d='28-Nov')
+
+```
+

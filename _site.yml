@@ -60,16 +60,10 @@ navbar:
           href: lecture-6b.html
           
         - text: "Lecture-7a"
-          href: 
+          href: lecture-7a.html
           
         - text: "Lecture-7b"
-          href:   
-          
-        - text: "Lecture-8a"
-          href:   
-        
-        - text: "Lecture-8b"
-          href:   
+          href: lecture-7b.html  
           
     - text: "Kaggle Notebooks"
       menu:
@@ -160,10 +154,13 @@ navbar:
     - text: "Assignments"
       menu:
         - text: "Assignment1"
-          href: https://www.kaggle.com/code/uocoeeds/assignment-1/
+          href: https://www.kaggle.com/code/uocoeeds/assignment-1
           
         - text: "Assignment2"
           href: https://www.kaggle.com/code/uocoeeds/assignment-2
+
+        - text: "Assignment3"
+          href: https://www.kaggle.com/code/uocoeeds/assignment-3
           
     - icon: fa fa-github
       href: https://github.com/uo-datasci-specialization/c4-ml-fall-2022
