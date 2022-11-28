@@ -2456,10 +2456,8 @@ Lecture Notes
 <a href="lecture-5.html">Lecture-5</a>
 <a href="lecture-6a.html">Lecture-6a</a>
 <a href="lecture-6b.html">Lecture-6b</a>
-<span class="nav-dropdown-header">Lecture-7a</span>
-<span class="nav-dropdown-header">Lecture-7b</span>
-<span class="nav-dropdown-header">Lecture-8a</span>
-<span class="nav-dropdown-header">Lecture-8b</span>
+<a href="lecture-7a.html">Lecture-7a</a>
+<a href="lecture-7b.html">Lecture-7b</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2514,8 +2512,9 @@ Assignments
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="https://www.kaggle.com/code/uocoeeds/assignment-1/">Assignment1</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-1">Assignment1</a>
 <a href="https://www.kaggle.com/code/uocoeeds/assignment-2">Assignment2</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-3">Assignment3</a>
 </div>
 </div>
 <a href="https://github.com/uo-datasci-specialization/c4-ml-fall-2022">
@@ -2594,7 +2593,7 @@ Forests</a></li>
 }
 
 </style>
-<p>[Updated: Fri, Nov 25, 2022 - 00:03:44 ]</p>
+<p>[Updated: Sun, Nov 27, 2022 - 14:10:08 ]</p>
 <h1 id="the-concept-of-bootstrap-aggregation-bagging">1. The Concept of
 Bootstrap Aggregation (BAGGING)</h1>
 <p>The concept of bagging is based on the idea that predictions from an
@@ -2829,7 +2828,7 @@ we will save the predictions in a matrix form to compare.</p>
 <span><span class='va'>preds</span><span class='op'>$</span><span class='va'>model9</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>bag.models</span><span class='op'>[[</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>]</span>,<span class='va'>read_te</span><span class='op'>)</span></span>
 <span><span class='va'>preds</span><span class='op'>$</span><span class='va'>model10</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>bag.models</span><span class='op'>[[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>]</span>,<span class='va'>read_te</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>preds</span><span class='op'>$</span><span class='va'>average</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowMeans</a></span><span class='op'>(</span><span class='va'>preds</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span><span class='op'>)</span></span>
+<span><span class='va'>preds</span><span class='op'>$</span><span class='va'>average</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/Matrix/man/colSums.html'>rowMeans</a></span><span class='op'>(</span><span class='va'>preds</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>preds</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -3190,11 +3189,11 @@ developing each tree.</p>
 </div>
 <pre><code>$everything
    user  system elapsed 
- 179.36    1.25  134.50 
+ 177.76    1.08  133.97 
 
 $final
    user  system elapsed 
-  16.31    0.00   11.64 
+  15.87    0.05   11.38 
 
 $prediction
 [1] NA NA NA</code></pre>

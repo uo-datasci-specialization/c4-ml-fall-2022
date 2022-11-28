@@ -2456,10 +2456,8 @@ Lecture Notes
 <a href="lecture-5.html">Lecture-5</a>
 <a href="lecture-6a.html">Lecture-6a</a>
 <a href="lecture-6b.html">Lecture-6b</a>
-<span class="nav-dropdown-header">Lecture-7a</span>
-<span class="nav-dropdown-header">Lecture-7b</span>
-<span class="nav-dropdown-header">Lecture-8a</span>
-<span class="nav-dropdown-header">Lecture-8b</span>
+<a href="lecture-7a.html">Lecture-7a</a>
+<a href="lecture-7b.html">Lecture-7b</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2514,8 +2512,9 @@ Assignments
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="https://www.kaggle.com/code/uocoeeds/assignment-1/">Assignment1</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-1">Assignment1</a>
 <a href="https://www.kaggle.com/code/uocoeeds/assignment-2">Assignment2</a>
+<a href="https://www.kaggle.com/code/uocoeeds/assignment-3">Assignment3</a>
 </div>
 </div>
 <a href="https://github.com/uo-datasci-specialization/c4-ml-fall-2022">
@@ -2610,7 +2609,7 @@ id="toc-wrapping-up-using-the-recipes-package">6. Wrapping-up using the
 }
 
 </style>
-<p>[Updated: Sun, Nov 13, 2022 - 19:24:10 ]</p>
+<p>[Updated: Sun, Nov 27, 2022 - 14:04:09 ]</p>
 <h1 id="scales-of-measurement-and-types-of-variables">1. Scales of
 Measurement and Types of Variables</h1>
 <p>It is important to understand the nature of variables and how they
@@ -3259,25 +3258,25 @@ variable are 0 and -0.02, respectively.</p>
 </div>
 <pre><code>Non-Standardized Box Cox Transformation with 1000 nonmissing obs.:
  Estimated statistics:
- - lambda = 0.2548933 
- - mean (before standardization) = -3.307104 
- - sd (before standardization) = 0.1761559 </code></pre>
+ - lambda = 0.2492177 
+ - mean (before standardization) = -3.36775 
+ - sd (before standardization) = 0.186852 </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>new</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
 <span> </span>
 <span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>old</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n mean sd median trimmed mad min  max range skew kurtosis
-X1    1 1000    0  0      0       0   0   0 0.01  0.01 1.75      3.7
+X1    1 1000    0  0      0       0   0   0 0.01  0.01 2.31     8.54
    se
 X1  0</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>new</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew
-X1    1 1000 -3.31 0.18  -3.31   -3.31 0.19 -3.85 -2.83  1.02 -0.04
+X1    1 1000 -3.37 0.19  -3.37   -3.37 0.19 -3.89 -2.75  1.13 -0.03
    kurtosis   se
-X1    -0.35 0.01</code></pre>
+X1    -0.22 0.01</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="lecture-2a_files/figure-html5/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
